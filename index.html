@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Révisions Brevet 2026</title>
+<style>
+:root{--green:#1D9E75;--green-dark:#085041;--green-light:#E1F5EE;--green-mid:#0F6E56;--text:#1a1a1a;--text-muted:#6b7280;--bg:#f3f4f6;--card:#fff;--border:#e5e7eb;--r:12px;--rs:8px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+nav{background:var(--green-dark);color:#fff;padding:0 1rem;display:flex;align-items:center;gap:.5rem;height:52px;position:sticky;top:0;z-index:100;}
+.logo{font-weight:700;font-size:15px;color:#9FE1CB;}
+.nav-links{display:flex;gap:3px;margin-left:auto;}
+nav button{background:transparent;border:none;color:rgba(255,255,255,.7);padding:5px 10px;border-radius:20px;cursor:pointer;font-size:12px;transition:all .15s;}
+nav button.active,nav button:hover{background:rgba(255,255,255,.18);color:#fff;}
+.page{display:none;padding:1rem;max-width:920px;margin:0 auto;}
+.page.active{display:block;}
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:1.25rem;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:.9rem;}
+.stat-label{font-size:11px;color:var(--text-muted);margin-bottom:3px;}
+.stat-value{font-size:26px;font-weight:700;color:var(--green-dark);}
+.stat-sub{font-size:11px;color:var(--text-muted);}
+.progress-section{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem;margin-bottom:1.25rem;}
+.progress-section h3{font-size:14px;font-weight:600;margin-bottom:.9rem;color:var(--green-dark);}
+.ch-progress{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.ch-progress-name{font-size:11px;color:var(--text);min-width:180px;max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ch-progress-bar{flex:1;height:7px;background:var(--border);border-radius:4px;overflow:hidden;}
+.ch-progress-fill{height:100%;background:var(--green);border-radius:4px;transition:width .3s;}
+.ch-progress-score{font-size:11px;color:var(--text-muted);min-width:60px;text-align:right;}
+.matiere-group-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin:10px 0 4px;}
+.btn-reset{margin-top:.9rem;background:transparent;border:1px solid var(--border);color:var(--text-muted);padding:5px 12px;border-radius:var(--rs);cursor:pointer;font-size:11px;}
+.btn-reset:hover{border-color:#e74c3c;color:#e74c3c;}
+.matiere-tabs{display:flex;gap:6px;margin-bottom:.9rem;flex-wrap:wrap;}
+.matiere-tab{padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text-muted);font-size:12px;cursor:pointer;transition:all .15s;}
+.matiere-tab.active{background:var(--green-dark);color:#9FE1CB;border-color:var(--green-dark);font-weight:600;}
+.chapter-list{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1rem;}
+.ch-btn{padding:5px 10px;border-radius:var(--rs);border:1px solid var(--border);background:var(--card);color:var(--text-muted);font-size:11px;cursor:pointer;transition:all .15s;}
+.ch-btn.active{background:var(--green-light);color:var(--green-dark);border-color:var(--green);font-weight:600;}
+.fiche-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;}
+.fiche-title{font-size:18px;font-weight:700;color:var(--green-dark);margin-bottom:2px;}
+.fiche-hint{font-size:11px;color:var(--text-muted);margin-bottom:1rem;}
+.section-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;margin-top:1rem;}
+.dates-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:7px;}
+.date-card{background:var(--green-light);border-radius:var(--rs);padding:8px 10px;}
+.date-year{font-size:13px;font-weight:700;color:var(--green-dark);}
+.date-desc{font-size:11px;color:var(--green-mid);margin-top:2px;line-height:1.4;}
+.people-grid{display:flex;flex-wrap:wrap;gap:7px;}
+.person-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--rs);padding:7px 10px;min-width:150px;}
+.person-name{font-size:12px;font-weight:600;color:var(--text);}
+.person-role{font-size:11px;color:var(--text-muted);margin-top:2px;line-height:1.4;}
+.summary-block{border-left:3px solid var(--green);padding-left:10px;margin-bottom:10px;}
+.summary-title{font-size:12px;font-weight:600;color:var(--green-dark);margin-bottom:3px;}
+.summary-text{font-size:12px;color:var(--text);line-height:1.65;}
+.notions{display:flex;flex-wrap:wrap;gap:5px;margin-top:3px;}
+.notion{background:var(--green-light);border:1px solid var(--green);border-radius:20px;padding:3px 9px;font-size:11px;color:var(--green-dark);font-weight:500;}
+.btn-quiz{margin-top:1rem;width:100%;padding:11px;border-radius:var(--rs);border:none;background:var(--green);color:#fff;font-size:14px;font-weight:600;cursor:pointer;}
+.btn-quiz:hover{background:var(--green-dark);}
+.quiz-header{background:var(--green-dark);color:#fff;border-radius:var(--r) var(--r) 0 0;padding:1rem 1.25rem;}
+.quiz-header h2{font-size:15px;font-weight:600;}
+.quiz-meta{font-size:12px;color:#9FE1CB;margin-top:2px;}
+.quiz-body{background:var(--card);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--r) var(--r);padding:1.25rem;}
+.progress-bar{height:4px;background:var(--border);border-radius:2px;margin-bottom:1.25rem;overflow:hidden;}
+.progress-fill{height:100%;background:var(--green);border-radius:2px;transition:width .3s;}
+.question-text{font-size:15px;font-weight:600;color:var(--text);margin-bottom:1rem;line-height:1.5;}
+.options{display:flex;flex-direction:column;gap:8px;}
+.option{padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--rs);cursor:pointer;font-size:13px;transition:all .15s;background:var(--card);text-align:left;}
+.option:hover:not(.disabled){border-color:var(--green);background:var(--green-light);color:var(--green-dark);}
+.option.correct{border-color:var(--green);background:var(--green-light);color:var(--green-dark);font-weight:600;}
+.option.wrong{border-color:#e74c3c;background:#fef2f2;color:#b91c1c;}
+.option.disabled{cursor:default;}
+.feedback{margin-top:.9rem;padding:9px 12px;border-radius:var(--rs);font-size:12px;line-height:1.5;display:none;}
+.feedback.show{display:block;}
+.feedback.correct{background:var(--green-light);color:var(--green-dark);border-left:3px solid var(--green);}
+.feedback.wrong{background:#fef2f2;color:#b91c1c;border-left:3px solid #e74c3c;}
+.btn-next{margin-top:1rem;width:100%;padding:11px;background:var(--green-dark);color:#fff;border:none;border-radius:var(--rs);font-size:14px;font-weight:600;cursor:pointer;display:none;}
+.btn-next.show{display:block;}
+.result-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.75rem;text-align:center;}
+.result-score{font-size:52px;font-weight:800;color:var(--green-dark);}
+.result-label{font-size:14px;color:var(--text-muted);margin-bottom:1.25rem;}
+.result-msg{font-size:17px;font-weight:600;color:var(--text);margin-bottom:.4rem;}
+.result-detail{font-size:13px;color:var(--text-muted);margin-bottom:1.25rem;}
+.result-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+.btn-primary{padding:9px 20px;background:var(--green);color:#fff;border:none;border-radius:var(--rs);font-size:13px;font-weight:600;cursor:pointer;}
+.btn-secondary{padding:9px 20px;background:transparent;color:var(--green-dark);border:1.5px solid var(--green);border-radius:var(--rs);font-size:13px;font-weight:600;cursor:pointer;}
+.answers-review{margin-top:1.25rem;text-align:left;}
+.answer-item{padding:10px;border-radius:var(--rs);margin-bottom:7px;font-size:12px;}
+.answer-item.ok{background:var(--green-light);border-left:3px solid var(--green);}
+.answer-item.ko{background:#fef2f2;border-left:3px solid #e74c3c;}
+.answer-q{font-weight:600;margin-bottom:3px;}
+.answer-detail{color:var(--text-muted);}
+h2.page-title{font-size:18px;font-weight:700;color:var(--green-dark);margin-bottom:1rem;}
+</style>
+</head>
+<body>
+<nav>
+  <span class="logo">📚 Brevet 2026</span>
+  <div class="nav-links">
+    <button onclick="showPage('dashboard')" id="nav-dashboard" class="active">Tableau de bord</button>
+    <button onclick="showPage('fiches')" id="nav-fiches">Fiches</button>
+    <button onclick="showPage('quiz-select')" id="nav-quiz">Quiz</button>
+  </div>
+</nav>
+<div class="page active" id="page-dashboard">
+  <h2 class="page-title">Mon tableau de bord</h2>
+  <div class="dash-grid" id="dash-stats"></div>
+  <div class="progress-section"><h3>Progression par chapitre</h3><div id="dash-progress"></div><button class="btn-reset" onclick="confirmReset()">🗑 Réinitialiser</button></div>
+</div>
+<div class="page" id="page-fiches">
+  <div class="matiere-tabs" id="matiere-tabs"></div>
+  <div class="chapter-list" id="chapter-list"></div>
+  <div id="fiche-display"></div>
+</div>
+<div class="page" id="page-quiz-select">
+  <h2 class="page-title">Choisir un quiz</h2>
+  <div class="matiere-tabs" id="quiz-matiere-tabs"></div>
+  <div class="chapter-list" id="quiz-chapter-list"></div>
+  <div id="quiz-area"></div>
+</div>
+<script>
+const DATA = {
+francais:{label:"Français ⚡",chapters:[
+{id:"fr1",title:"Lecture et analyse de texte",
+dates:[{year:"Méthode",desc:"Identifier nature, auteur, date, thème"},{year:"Étape 1",desc:"Lire le texte 2 fois avant de répondre"},{year:"Étape 2",desc:"Souligner les mots clés et les procédés"},{year:"Étape 3",desc:"Citer le texte pour justifier chaque réponse"}],
+people:[{name:"Narrateur",role:"Celui qui raconte (peut être ≠ auteur)"},{name:"Auteur",role:"La personne réelle qui a écrit le texte"},{name:"Personnage",role:"Être fictif qui agit dans l'histoire"}],
+causes:"L'épreuve de français comporte une partie lecture : analyser un texte littéraire (roman, nouvelle, poème, théâtre) ou argumentatif. Il faut comprendre le sens, les effets produits et les procédés utilisés.",
+deroulement:"Pour analyser : 1) Identifier le type de texte et le registre (lyrique, épique, comique, tragique, fantastique). 2) Repérer le point de vue narratif (interne, externe, omniscient). 3) Analyser les procédés stylistiques (figures de style, champs lexicaux, temps verbaux). 4) Interpréter le sens et les effets produits.",
+fin:"Toujours citer le texte entre guillemets. Éviter la paraphrase (répéter ce que dit le texte sans l'analyser). Utiliser le vocabulaire littéraire précis.",
+notions:["Point de vue narratif","Registre","Champ lexical","Figure de style","Paraphrase","Citation","Type de texte"],
+quiz:[
+{q:"Quel point de vue narratif limite le lecteur aux pensées d'un seul personnage ?",options:["Point de vue externe","Point de vue omniscient","Point de vue interne","Point de vue objectif"],answer:2,explication:"Le point de vue interne limite le lecteur à ce que sait et ressent un seul personnage. Le narrateur dit 'je pense', 'je ressens'. Courant dans les romans à la 1ère personne."},
+{q:"Un texte qui cherche à convaincre le lecteur est un texte :",options:["Narratif","Descriptif","Argumentatif","Explicatif"],answer:2,explication:"Le texte argumentatif défend une thèse pour convaincre. Il utilise des arguments, des exemples, des connecteurs logiques (donc, car, ainsi)."},
+{q:"Qu'est-ce qu'un champ lexical ?",options:["Une liste de synonymes","Un ensemble de mots liés à un même thème","Un type de rime","Un procédé de répétition"],answer:1,explication:"Un champ lexical est un ensemble de mots appartenant au même domaine thématique dans un texte. Ex : champ lexical de la guerre : bataille, soldat, ennemi, sang."},
+{q:"Qu'est-ce qu'une paraphrase, à éviter dans une analyse ?",options:["Une citation entre guillemets","Reformuler le texte sans l'analyser","Une figure de style","Un résumé de l'histoire"],answer:1,explication:"La paraphrase consiste à répéter ce que dit le texte avec d'autres mots, sans analyser. Il faut dire POURQUOI et COMMENT, pas juste QUOI."},
+{q:"Quel registre provoque la pitié et l'émotion du lecteur ?",options:["Le registre comique","Le registre épique","Le registre pathétique","Le registre fantastique"],answer:2,explication:"Le registre pathétique vise à provoquer l'émotion et la compassion. Il utilise des termes touchants, des descriptions de souffrance, des exclamations."},
+{q:"Le narrateur omniscient est un narrateur qui :",options:["Ne connaît rien des personnages","Connaît tout : pensées, passé et futur de tous","Ne raconte que ce qu'il voit","Est un personnage de l'histoire"],answer:1,explication:"Le narrateur omniscient sait tout sur tous les personnages : pensées, sentiments, passé, futur. C'est le 'Dieu' de l'histoire. Courant dans les romans du XIXe siècle."},
+{q:"Pour justifier une réponse en analyse de texte, il faut :",options:["Inventer des exemples","Citer le texte entre guillemets","Résumer l'histoire","Donner son opinion"],answer:1,explication:"Toute affirmation doit être justifiée par une citation précise du texte, entre guillemets. Sans citation = réponse incomplète."}
+]},
+{id:"fr2",title:"Figures de style",
+dates:[{year:"À savoir",desc:"10 figures incontournables au brevet"},{year:"Méthode",desc:"Identifier → Nommer → Expliquer l'effet produit"}],
+people:[{name:"Victor Hugo",role:"Maître de la métaphore et de l'hyperbole"},{name:"La Fontaine",role:"Maître de la personnification (fables)"}],
+causes:"Les figures de style donnent de l'expressivité au langage. Il faut savoir les identifier, les nommer et expliquer leur effet sur le lecteur.",
+deroulement:"LES 10 ESSENTIELLES : 1) Métaphore : comparaison SANS outil (ex: 'sa voix est de la musique'). 2) Comparaison : AVEC outil comme/tel. 3) Personnification : objet traité comme un être vivant. 4) Hyperbole : exagération. 5) Litote : dire peu pour suggérer plus ('ce n'est pas mal'). 6) Antithèse : opposition de deux idées. 7) Anaphore : répétition en début de phrase. 8) Oxymore : association de contraires ('obscure clarté'). 9) Euphémisme : atténuer une réalité. 10) Allitération : répétition de sons consonantiques.",
+fin:"Pour chaque figure : 1) Citer l'exemple. 2) Nommer la figure. 3) Expliquer l'effet produit. Ne JAMAIS juste nommer sans expliquer.",
+notions:["Métaphore","Comparaison","Personnification","Hyperbole","Litote","Antithèse","Anaphore","Oxymore","Euphémisme","Allitération"],
+quiz:[
+{q:"'Il pleurait comme une fontaine' est un exemple de :",options:["Métaphore","Comparaison","Hyperbole","Personnification"],answer:1,explication:"C'est une comparaison : elle utilise l'outil 'comme'. Si on avait dit 'il était une fontaine de larmes', ce serait une métaphore (sans outil)."},
+{q:"'Le soleil se leva paresseux' est un exemple de :",options:["Métaphore","Hyperbole","Personnification","Antithèse"],answer:2,explication:"La personnification attribue des caractéristiques humaines à un objet. Ici, le soleil est 'paresseux', adjectif réservé aux êtres humains."},
+{q:"'Je meurs de faim' est un exemple de :",options:["Litote","Euphémisme","Hyperbole","Oxymore"],answer:2,explication:"C'est une hyperbole : exagération délibérée. On ne meurt pas vraiment de faim, c'est une façon d'insister sur l'intensité."},
+{q:"'Ce n'est pas mal' pour dire 'c'est très bien' est une :",options:["Hyperbole","Litote","Euphémisme","Antithèse"],answer:1,explication:"La litote dit le moins pour suggérer le plus. 'Ce n'est pas mal' = 'c'est bien'. Souvent utilisé par modestie."},
+{q:"'Douce violence' est un exemple de :",options:["Antithèse","Oxymore","Métaphore","Allitération"],answer:1,explication:"L'oxymore associe dans un même groupe deux termes contradictoires. 'Douce' et 'violence' sont opposés. Effet : créer un paradoxe frappant."},
+{q:"La répétition d'un mot en début de phrases successives s'appelle :",options:["Allitération","Antithèse","Anaphore","Assonance"],answer:2,explication:"L'anaphore est la répétition d'un mot ou groupe en début de phrases. Ex : 'Je veux la paix. Je veux la justice.' Effet : insistance, rythme."},
+{q:"La répétition de sons consonantiques dans des mots proches s'appelle :",options:["Assonance","Allitération","Anaphore","Métaphore"],answer:1,explication:"L'allitération est la répétition de sons consonantiques. Ex : 'les sanglots longs des violons' (Verlaine) — répétition du son 's'. L'assonance porte sur les voyelles."}
+]},
+{id:"fr3",title:"Grammaire et conjugaison",
+dates:[{year:"Priorités",desc:"Parenthèses → Puissances → × ÷ → + −"},{year:"Participe passé",desc:"Avec avoir : accord avec COD avant. Avec être : accord avec sujet"},{year:"Homophones",desc:"a/à, est/et, son/sont, se/ce, ou/où"}],
+people:[{name:"COD",role:"Complément d'Objet Direct : répond à 'quoi ?' ou 'qui ?'"},{name:"COI",role:"Complément d'Objet Indirect : répond à 'à qui ?' ou 'de quoi ?'"},{name:"Épithète",role:"Adjectif directement lié au nom (sans verbe)"}],
+causes:"La grammaire est évaluée à l'écrit. Les pièges classiques : accord du participe passé, homophones (a/à, est/et), accords sujet-verbe.",
+deroulement:"PARTICIPE PASSÉ avec AVOIR : s'accorde avec le COD si placé AVANT le verbe. Ex : 'la pomme que j'ai mangée'. Avec ÊTRE : s'accorde toujours avec le sujet. HOMOPHONES : a (verbe avoir → remplacer par 'avait') / à (préposition) ; est (verbe être → 'était') / et (conjonction) ; son (déterminant → 'le') / sont (verbe → 'étaient').",
+fin:"Astuce participe avec avoir : remplacer par un verbe du 3e groupe. Si on entend le féminin à l'oral, il faut accorder. Ex : 'les fleurs que j'ai cueillIES' → on entend le -e donc accord.",
+notions:["Participe passé","COD","COI","Attribut","Épithète","Homophones","Subjonctif","Conditionnel"],
+quiz:[
+{q:"Dans 'La lettre qu'il a écrite', pourquoi 'écrite' prend un -e ?",options:["Parce que le sujet est féminin","Parce que le COD 'lettre' est féminin et placé AVANT","Par accord avec 'il'","Par accord avec 'a'"],answer:1,explication:"Avec l'auxiliaire AVOIR, le participe s'accorde avec le COD uniquement s'il est AVANT le verbe. Ici 'que' = 'la lettre' (féminin singulier) est avant 'a écrite' → accord."},
+{q:"Quelle est la fonction de 'rapidement' dans 'Il court rapidement' ?",options:["COD","Attribut du sujet","Complément Circonstanciel de manière","Épithète"],answer:2,explication:"'Rapidement' est un adverbe qui indique la manière de courir. C'est un Complément Circonstanciel de Manière (CCM). Répond à la question 'comment ?'"},
+{q:"'a' ou 'à' ? 'Il ___ mal ___ la tête.'",options:["a / à","à / a","a / a","à / à"],answer:0,explication:"'Il a mal' : 'a' = verbe avoir (on peut dire 'avait'). 'à la tête' : 'à' = préposition (on ne peut pas dire 'avait'). Astuce : si on peut remplacer par 'avait', c'est le verbe avoir."},
+{q:"Conjugue 'savoir' au subjonctif présent, 3e personne du singulier :",options:["il sait","il saura","qu'il sache","il saurait"],answer:2,explication:"Au subjonctif présent, 'savoir' est irrégulier : que je sache, que tu saches, qu'il sache. S'emploie après 'il faut que', 'bien que', 'pour que'..."},
+{q:"Quelle est la fonction de 'délicieux' dans 'Ce gâteau est délicieux' ?",options:["Épithète","COD","Attribut du sujet","Complément du nom"],answer:2,explication:"'Délicieux' est séparé du nom par le verbe d'état 'est' → attribut du sujet. Si c'était 'un gâteau délicieux', ce serait une épithète (collé au nom)."},
+{q:"'sont' ou 'son' ? 'Ses parents ___ fiers de ___ succès.'",options:["son / son","sont / son","son / sont","sont / sont"],answer:1,explication:"'Ses parents sont fiers' : 'sont' = verbe être (→ 'étaient'). 'son succès' : 'son' = déterminant possessif (→ 'le'). Astuce : 'étaient' = verbe être."},
+{q:"Le conditionnel présent s'utilise pour :",options:["Exprimer une action passée","Exprimer une hypothèse ou une politesse","Exprimer un ordre","Exprimer une certitude future"],answer:1,explication:"Le conditionnel sert pour : 1) une hypothèse (Si j'avais de l'argent, j'achèterais) 2) la politesse (Je voudrais) 3) un futur dans le passé (Il savait qu'il partirait)."}
+]}
+]},
+histoire:{label:"Histoire",chapters:[
+{id:"h1",title:"La Première Guerre mondiale",
+dates:[{year:"28 juin 1914",desc:"Assassinat de François-Ferdinand à Sarajevo"},{year:"Août 1914",desc:"Déclaration de guerre généralisée"},{year:"1916",desc:"Batailles de Verdun et de la Somme"},{year:"Avril 1917",desc:"Entrée en guerre des États-Unis"},{year:"11 nov. 1918",desc:"Armistice"},{year:"28 juin 1919",desc:"Traité de Versailles"}],
+people:[{name:"François-Ferdinand",role:"Archiduc assassiné à Sarajevo"},{name:"Pétain",role:"Général français, héros de Verdun"},{name:"Clemenceau",role:"Président du Conseil, 'le Tigre'"},{name:"Wilson",role:"Président américain, 14 points"}],
+causes:"L'Europe est divisée entre la Triple Entente (France, RU, Russie) et la Triple Alliance (Allemagne, Autriche-Hongrie). Nationalismes et rivalités coloniales créent un climat explosif. L'assassinat de François-Ferdinand à Sarajevo déclenche la réaction en chaîne.",
+deroulement:"Guerre de mouvement (1914) puis tranchées. Batailles de Verdun et de la Somme (1916) : hécatombe. Nouvelles armes : gaz, chars, avions. Mutineries en 1917. Entrée des USA qui redresse la situation des Alliés.",
+fin:"Armistice le 11 novembre 1918. Traité de Versailles (1919) : lourdes réparations pour l'Allemagne, perte de territoires. Ce traité humiliant sera une cause du nazisme.",
+notions:["Tranchées","Poilus","Union Sacrée","Armistice","Traité de Versailles","Triple Entente"],
+quiz:[
+{q:"Quelle est la date de l'armistice de la Première Guerre mondiale ?",options:["28 juin 1919","4 août 1914","11 novembre 1918","28 juin 1918"],answer:2,explication:"L'armistice est signé le 11 novembre 1918 à 11h. Les combats s'arrêtent. Cette date est commémorée chaque année en France."},
+{q:"Comment appelle-t-on les soldats français de la PGM ?",options:["Les grognards","Les poilus","Les bleuets","Les chasseurs"],answer:1,explication:"Les soldats français sont surnommés 'les poilus' en raison de leur barbe non rasée dans les tranchées, symbole de leur endurance."},
+{q:"Quel traité officialise la fin de la Première Guerre mondiale ?",options:["Traité de Trianon","Traité de Sèvres","Traité de Versailles","Traité de Brest-Litovsk"],answer:2,explication:"Le Traité de Versailles est signé le 28 juin 1919. Il impose à l'Allemagne de lourdes réparations et la reconnaissance de sa responsabilité."},
+{q:"Quelle bataille de 1916 est le symbole du carnage de la PGM ?",options:["La Marne","Verdun","La Somme","Ypres"],answer:1,explication:"Verdun (fév.-déc. 1916) est le symbole de l'horreur : près de 300 000 morts pour aucun gain territorial. Le général Pétain y devient un héros."},
+{q:"En quelle année les États-Unis entrent-ils en guerre ?",options:["1914","1915","1916","1917"],answer:3,explication:"Les États-Unis entrent en guerre en avril 1917, après la reprise de la guerre sous-marine allemande. Leur arrivée redresse la situation des Alliés."},
+{q:"Qu'est-ce que l'Union Sacrée ?",options:["L'alliance franco-britannique","L'union de tous les partis français pour l'effort de guerre","Un mouvement pacifiste","Une alliance secrète"],answer:1,explication:"L'Union Sacrée est l'union de tous les partis politiques français pour soutenir l'effort de guerre, annoncée par Poincaré en août 1914."}
+]},
+{id:"h2",title:"L'URSS de Staline & le régime nazi",
+dates:[{year:"1924",desc:"Mort de Lénine — Staline prend le pouvoir"},{year:"30 jan. 1933",desc:"Hitler nommé Chancelier d'Allemagne"},{year:"1935",desc:"Lois de Nuremberg — discrimination des Juifs"},{year:"9-10 nov. 1938",desc:"Nuit de Cristal — pogrom antijuif"},{year:"1939",desc:"Pacte germano-soviétique"}],
+people:[{name:"Staline",role:"Dictateur soviétique (1924-1953)"},{name:"Hitler",role:"Führer d'Allemagne (1933-1945)"},{name:"Goebbels",role:"Ministre de la Propagande nazie"}],
+causes:"La crise de 1929 frappe l'Allemagne (chômage, humiliation de Versailles). Hitler exploite la colère populaire et l'antisémitisme. En URSS, Staline impose un régime totalitaire après la mort de Lénine.",
+deroulement:"En Allemagne : IIIe Reich, parti unique, propagande, persécution des Juifs (Nuremberg 1935, Nuit de Cristal 1938), réarmement. En URSS : collectivisation forcée, Goulag, Grandes Purges pour éliminer les opposants.",
+fin:"Ces deux régimes totalitaires mènent à la Seconde Guerre mondiale. Le régime nazi s'effondre en 1945. Le régime stalinien survit jusqu'à la mort de Staline en 1953.",
+notions:["Totalitarisme","Goulag","IIIe Reich","Antisémitisme","Propagande","Lois de Nuremberg"],
+quiz:[
+{q:"Quelle loi de 1935 prive les Juifs de la citoyenneté allemande ?",options:["Lois de Munich","Lois de Nuremberg","Lois de Berlin","Lois de Weimar"],answer:1,explication:"Les lois de Nuremberg (1935) privent les Juifs de la citoyenneté allemande et interdisent les mariages mixtes. Officialisation de l'antisémitisme d'État."},
+{q:"Comment appelle-t-on les camps de travail forcé en URSS ?",options:["Kolkhoz","Soviet","Goulag","Stakhanov"],answer:2,explication:"Le Goulag désigne le réseau de camps de travail forcé où Staline envoie ses opposants. Des millions de personnes y meurent."},
+{q:"En quelle année Hitler est-il nommé Chancelier ?",options:["1929","1931","1933","1935"],answer:2,explication:"Hitler est nommé Chancelier le 30 janvier 1933 par le président Hindenburg, dans un contexte de crise économique."},
+{q:"Qu'est-ce que la Nuit de Cristal ?",options:["Une bataille","Un discours de Goebbels","Un pogrom antijuif en Allemagne","La signature d'un traité"],answer:2,explication:"La Nuit de Cristal (9-10 novembre 1938) : milliers de commerces juifs saccagés, synagogues brûlées, centaines de Juifs tués ou déportés."},
+{q:"Quel terme désigne un régime qui contrôle tous les aspects de la vie ?",options:["Démocratie","Monarchie","Totalitarisme","Fédéralisme"],answer:2,explication:"Le totalitarisme contrôle tous les aspects de la vie : politique, économie, culture, vie privée, via un parti unique, la propagande et la terreur."},
+{q:"Qu'est-ce que le Pacte germano-soviétique de 1939 ?",options:["Une alliance militaire contre la France","Un accord de non-agression entre Hitler et Staline","Un traité commercial","Une déclaration de guerre conjointe"],answer:1,explication:"Le Pacte Molotov-Ribbentrop (23 août 1939) est un accord de non-agression entre l'URSS et l'Allemagne, avec un partage secret de l'Europe de l'Est."}
+]},
+{id:"h3",title:"La France défaite et occupée (1940-1945)",
+dates:[{year:"Mai-juin 1940",desc:"Effondrement de l'armée française"},{year:"17 juin 1940",desc:"Pétain demande l'armistice"},{year:"18 juin 1940",desc:"Appel du général de Gaulle depuis Londres"},{year:"16-17 juil. 1942",desc:"Rafle du Vél'd'Hiv"},{year:"6 juin 1944",desc:"Débarquement en Normandie"},{year:"25 août 1944",desc:"Libération de Paris"}],
+people:[{name:"Pétain",role:"Chef de l'État de Vichy, collaborateur"},{name:"De Gaulle",role:"Chef de la France Libre, Appel du 18 juin"},{name:"Jean Moulin",role:"Chef de la Résistance, mort sous la torture"}],
+causes:"En mai 1940, l'Allemagne contourne la ligne Maginot par les Ardennes. L'armée française s'effondre. Pétain demande l'armistice.",
+deroulement:"France divisée : zone occupée (Nord) et zone libre (Vichy, Sud). Vichy collabore : persécution des Juifs (Rafle du Vél'd'Hiv 1942), STO, répression. De Gaulle organise la France Libre depuis Londres. Résistance intérieure (maquis, réseaux).",
+fin:"Débarquement allié en Normandie (6 juin 1944). Paris libéré le 25 août 1944. Pétain jugé et condamné à mort (peine commuée).",
+notions:["Armistice","Collaboration","Vichy","France Libre","Résistance","Déportation","Débarquement"],
+quiz:[
+{q:"Depuis quelle ville de Gaulle lance-t-il son Appel du 18 juin 1940 ?",options:["Paris","Alger","Londres","Bordeaux"],answer:2,explication:"De Gaulle lance son Appel depuis la BBC à Londres, appelant les Français à continuer le combat malgré la demande d'armistice de Pétain."},
+{q:"Comment appelle-t-on la politique de soutien de Vichy à l'Allemagne nazie ?",options:["La Résistance","La Collaboration","La Capitulation","La Neutralité"],answer:1,explication:"La Collaboration désigne la politique de Vichy de coopération avec l'Allemagne nazie : déportation des Juifs, STO, répression de la Résistance."},
+{q:"Qu'est-ce que la Rafle du Vél'd'Hiv (juillet 1942) ?",options:["Une victoire de la Résistance","L'arrestation de Juifs par la police française","Le débarquement des Alliés","L'arrestation de Jean Moulin"],answer:1,explication:"La rafle du Vél'd'Hiv : 13 000 Juifs arrêtés à Paris par la police française sur ordre de Vichy, déportés vers les camps d'extermination nazis."},
+{q:"Quelle est la date du débarquement allié en Normandie ?",options:["25 août 1944","6 juin 1943","6 juin 1944","11 novembre 1944"],answer:2,explication:"Le Débarquement (Opération Overlord) a lieu le 6 juin 1944. C'est la plus grande opération amphibie de l'Histoire."},
+{q:"Qu'est-ce que le STO ?",options:["Service Territorial d'Occupation","Service du Travail Obligatoire en Allemagne","Syndicat des Travailleurs de l'Ouest","Service de Transport et d'Organisation"],answer:1,explication:"Le Service du Travail Obligatoire force des centaines de milliers de Français à travailler en Allemagne. Beaucoup fuient vers les maquis."},
+{q:"Quand Paris est-il libéré ?",options:["6 juin 1944","15 août 1944","25 août 1944","11 novembre 1944"],answer:2,explication:"Paris est libéré le 25 août 1944 grâce à la 2e Division Blindée de Leclerc. De Gaulle descend les Champs-Élysées triomphalement."}
+]},
+{id:"h4",title:"Indépendances et nouveaux États",
+dates:[{year:"1947",desc:"Indépendance de l'Inde et du Pakistan"},{year:"1954",desc:"Défaite Diên Biên Phu / début guerre d'Algérie"},{year:"1956",desc:"Indépendances du Maroc et de la Tunisie"},{year:"1960",desc:"17 pays africains indépendants"},{year:"1962",desc:"Indépendance de l'Algérie — accords d'Évian"}],
+people:[{name:"Gandhi",role:"Leader non-violent de l'indépendance indienne"},{name:"Ho Chi Minh",role:"Leader communiste du Viêtnam"},{name:"FLN",role:"Front de Libération Nationale algérien"}],
+causes:"Après 1945, les peuples colonisés réclament leur liberté (Charte de l'ONU). Les métropoles européennes sont affaiblies par la guerre.",
+deroulement:"Indépendances négociées (Maroc, Afrique noire) ou après guerres violentes (Indochine 1946-1954, Algérie 1954-1962). La guerre d'Algérie est la plus traumatisante : 1 million de victimes, torture des deux côtés.",
+fin:"Accords d'Évian (1962) : indépendance de l'Algérie. Les nouveaux États font face à pauvreté, instabilité et frontières héritées de la colonisation.",
+notions:["Décolonisation","Nationalisme","Autodétermination","Tiers-monde","ONU","Accords d'Évian"],
+quiz:[
+{q:"Comment appelle-t-on le droit des peuples à choisir leur propre gouvernement ?",options:["La décolonisation","L'autodétermination","La démocratisation","L'émancipation"],answer:1,explication:"L'autodétermination est le droit des peuples à disposer d'eux-mêmes, reconnu par la Charte de l'ONU en 1945."},
+{q:"Quelle défaite marque la fin de la présence française en Indochine ?",options:["Dien Bien Phu","Alger","Hanoi","Saïgon"],answer:0,explication:"La défaite française à Diên Biên Phu (mai 1954) marque la fin de la guerre d'Indochine. La France cède le Viêtnam, le Laos et le Cambodge."},
+{q:"En quelle année commence la guerre d'Algérie ?",options:["1952","1954","1956","1958"],answer:1,explication:"La guerre d'Algérie débute le 1er novembre 1954 avec les attentats du FLN. Elle durera 8 ans."},
+{q:"Comment appelle-t-on l'année 1960 en Afrique ?",options:["L'Année de la liberté","L'Année de l'Afrique","L'Année de l'indépendance","L'Année du tiers-monde"],answer:1,explication:"1960 est 'l'Année de l'Afrique' : 17 pays africains accèdent à l'indépendance cette même année."},
+{q:"Quels accords mettent fin à la guerre d'Algérie ?",options:["Accords de Genève","Accords d'Évian","Accords de Paris","Traité de Rome"],answer:1,explication:"Les accords d'Évian sont signés le 18 mars 1962 entre la France et le FLN. Cessez-le-feu et indépendance de l'Algérie."},
+{q:"Quel leader a mené l'indépendance de l'Inde par la non-violence ?",options:["Nehru","Jinnah","Gandhi","Bose"],answer:2,explication:"Gandhi mène l'indépendance indienne par la non-violence (ahimsa) et la désobéissance civile. L'indépendance est accordée en 1947."}
+]},
+{id:"h5",title:"Enjeux et conflits après 1989",
+dates:[{year:"9 nov. 1989",desc:"Chute du mur de Berlin"},{year:"1991",desc:"Dissolution de l'URSS / Guerre du Golfe"},{year:"1994",desc:"Génocide au Rwanda"},{year:"11 sept. 2001",desc:"Attentats terroristes aux États-Unis"}],
+people:[{name:"Ben Laden",role:"Chef d'Al-Qaïda, responsable du 11/09"},{name:"Milosevic",role:"Leader serbe, crimes en ex-Yougoslavie"}],
+causes:"La fin de la guerre froide crée un monde unipolaire dominé par les USA. Nouveaux conflits : guerres ethniques, terrorisme islamiste, crises humanitaires.",
+deroulement:"Guerres régionales (ex-Yougoslavie, Rwanda), terrorisme international (11/09 2001), interventions américaines (Golfe, Afghanistan, Irak). L'ONU peine à maintenir la paix.",
+fin:"La lutte contre le terrorisme reshape la géopolitique mondiale. Les crises humanitaires posent la question du droit d'ingérence.",
+notions:["Terrorisme","Génocide","Ingérence humanitaire","ONU","Islamisme"],
+quiz:[
+{q:"Quelle date marque symboliquement la fin de la guerre froide ?",options:["1er janvier 1990","9 novembre 1989","25 décembre 1991","11 septembre 2001"],answer:1,explication:"La chute du mur de Berlin le 9 novembre 1989 est le symbole de la fin de la guerre froide."},
+{q:"Quel groupe est responsable des attentats du 11 septembre 2001 ?",options:["L'État Islamique","Al-Qaïda","Le Hamas","Les Taliban"],answer:1,explication:"Al-Qaïda, dirigé par Oussama Ben Laden, organise les attentats du 11 septembre 2001 : 2 977 victimes aux États-Unis."},
+{q:"Qu'est-ce qu'un génocide ?",options:["Une guerre civile","L'extermination planifiée d'un groupe ethnique ou religieux","Un massacre de soldats","Une expulsion de population"],answer:1,explication:"Un génocide est l'extermination planifiée et systématique d'un groupe humain. Le Rwanda (1994) et la Bosnie (1995) en sont des exemples."},
+{q:"Qu'est-ce que le droit d'ingérence humanitaire ?",options:["Le droit de s'ingérer dans des élections","Le droit d'intervenir dans un pays pour protéger des civils","Le droit de refuser l'aide","Le droit de l'ONU de sanctionner"],answer:1,explication:"Le droit d'ingérence : la communauté internationale peut intervenir dans un pays souverain pour protéger des populations civiles de massacres ou génocides."},
+{q:"Quel pays intervient pour libérer le Koweït en 1991 ?",options:["La France seule","L'URSS","Une coalition internationale menée par les USA","L'ONU directement"],answer:2,explication:"La Guerre du Golfe (1991) : coalition de 35 pays menée par les USA libère le Koweït envahi par l'Irak de Saddam Hussein."},
+{q:"Dans quel pays se déroule le génocide de Srebrenica ?",options:["Rwanda","Irak","Kosovo","Ex-Yougoslavie (Bosnie)"],answer:3,explication:"Le massacre de Srebrenica (1995) fait 8 000 victimes bosniaques musulmanes. C'est le génocide le plus grave en Europe depuis 1945."}
+]},
+{id:"h6",title:"République et démocratie (1944-1947)",
+dates:[{year:"25 août 1944",desc:"Libération de Paris — de Gaulle chef du GPRF"},{year:"21 avr. 1944",desc:"Les femmes obtiennent le droit de vote"},{year:"Jan. 1946",desc:"De Gaulle démissionne"},{year:"Oct. 1946",desc:"Constitution de la IVe République"}],
+people:[{name:"De Gaulle",role:"Chef du GPRF, restaure la République"},{name:"Léon Blum",role:"Chef du gouvernement socialiste de transition"}],
+causes:"La Libération exige une refondation politique. Vichy a discrédité la IIIe République. Il faut restaurer la démocratie et juger les collaborateurs.",
+deroulement:"GPRF de Gaulle restaure la République. Les femmes votent pour la 1ère fois en 1945. Épuration judiciaire : Pétain condamné à mort (peine commuée), Laval exécuté. Référendum pour une nouvelle constitution.",
+fin:"Constitution d'octobre 1946 : IVe République (régime parlementaire). De Gaulle démissionne. 27 gouvernements en 12 ans → instabilité → Ve République en 1958.",
+notions:["GPRF","Épuration","Droit de vote des femmes","IVe République","Référendum"],
+quiz:[
+{q:"Que signifie GPRF ?",options:["Grand Parti Républicain Français","Gouvernement Provisoire de la République Française","Grand Plan de Reconstruction","Gouvernement Patriotique de la Résistance"],answer:1,explication:"Le GPRF (Gouvernement Provisoire de la République Française) est dirigé par de Gaulle de 1944 à 1946. Il restaure la légalité républicaine après Vichy."},
+{q:"En quelle année les femmes françaises obtiennent-elles le droit de vote ?",options:["1936","1940","1944","1946"],answer:2,explication:"Le droit de vote est accordé aux femmes françaises par une ordonnance du 21 avril 1944. Elles votent pour la 1ère fois aux élections de 1945."},
+{q:"Qu'est-ce que l'épuration après la Libération ?",options:["Le nettoyage des rues","Le jugement des collaborateurs de Vichy","L'expulsion des Allemands","La réforme de l'armée"],answer:1,explication:"L'épuration désigne les poursuites judiciaires contre les collaborateurs. Pétain condamné à mort (peine commuée), Laval exécuté."},
+{q:"Quelle République est créée en octobre 1946 ?",options:["IIIe République","IVe République","Ve République","IIe République"],answer:1,explication:"La Constitution d'octobre 1946 crée la IVe République, à régime parlementaire fort. Elle durera jusqu'en 1958."},
+{q:"Combien de gouvernements la IVe République a-t-elle connus en 12 ans ?",options:["5","12","27","40"],answer:2,explication:"La IVe République est instable : 27 gouvernements en 12 ans (1946-1958). Cette instabilité provoquera sa chute."},
+{q:"Pourquoi de Gaulle démissionne-t-il en janvier 1946 ?",options:["Il est malade","Il est mis en accusation","Il désapprouve la constitution trop parlementaire","Il est battu aux élections"],answer:2,explication:"De Gaulle désapprouve la IVe République qui donne trop de pouvoirs au Parlement et peu au président. Il démissionne le 20 janvier 1946."}
+]},
+{id:"h7",title:"La Ve République : les années de Gaulle",
+dates:[{year:"1958",desc:"Crise algérienne — de Gaulle revient au pouvoir"},{year:"4 oct. 1958",desc:"Constitution de la Ve République"},{year:"1962",desc:"Élection du président au suffrage universel direct"},{year:"Mai 1968",desc:"Crise sociale — grève générale"},{year:"Avr. 1969",desc:"De Gaulle perd le référendum et démissionne"}],
+people:[{name:"De Gaulle",role:"Fondateur et 1er président de la Ve République"},{name:"Michel Debré",role:"1er Premier ministre, architecte de la Constitution"},{name:"Pompidou",role:"Premier ministre puis successeur de de Gaulle"}],
+causes:"L'instabilité de la IVe République et la crise algérienne forcent le retour de de Gaulle. Il rédige une nouvelle Constitution renforçant le pouvoir exécutif.",
+deroulement:"Constitution renforçant le président (élu directement depuis 1962). Règlement de la question algérienne. Politique étrangère indépendante (force de frappe nucléaire, retrait de l'OTAN). Mai 68 : crise sociale majeure (grèves, barricades).",
+fin:"De Gaulle perd le référendum de 1969 et démissionne aussitôt. Mort en 1970. Héritage : République stable avec président fort.",
+notions:["Ve République","Suffrage universel direct","Référendum","Force de frappe","Mai 68"],
+quiz:[
+{q:"Quelle crise provoque le retour de de Gaulle au pouvoir en 1958 ?",options:["La crise économique de 1929","La guerre de Corée","La crise algérienne","La révolution communiste"],answer:2,explication:"La crise algérienne de mai 1958 (putsch militaire à Alger) provoque la chute de la IVe République. De Gaulle est rappelé au pouvoir."},
+{q:"Depuis quelle date les Français élisent-ils leur président au suffrage universel direct ?",options:["1958","1962","1965","1969"],answer:1,explication:"Le référendum de 1962 instaure l'élection du président au suffrage universel direct. Première élection selon cette règle en 1965."},
+{q:"Qu'est-ce que Mai 68 ?",options:["Un coup d'État militaire","Grèves générales et révolte étudiante","Une révolution communiste","Une crise économique"],answer:1,explication:"Mai 68 : révolte étudiante à Paris, grève générale de 10 millions de travailleurs. Remet en cause l'autorité traditionnelle."},
+{q:"Pourquoi de Gaulle démissionne-t-il en avril 1969 ?",options:["Il est renversé","Il perd un référendum","Il est malade","Il est mis en accusation"],answer:1,explication:"De Gaulle perd le référendum du 27 avril 1969 (52% de Non). Il avait engagé sa responsabilité : il démissionne immédiatement."},
+{q:"Qu'est-ce que la 'force de frappe' de de Gaulle ?",options:["Une unité d'élite","La force de dissuasion nucléaire française","Les forces de l'OTAN","La marine nationale"],answer:1,explication:"La force de frappe est l'arsenal nucléaire français créé par de Gaulle pour assurer l'indépendance stratégique de la France."},
+{q:"Quelle est la date d'adoption de la Constitution de la Ve République ?",options:["4 octobre 1958","28 septembre 1958","1er juin 1958","4 octobre 1946"],answer:0,explication:"La Constitution de la Ve République est adoptée le 4 octobre 1958, après avoir été approuvée par référendum le 28 septembre 1958 (79% de Oui)."}
+]},
+{id:"h8",title:"La Ve République depuis 1969",
+dates:[{year:"1974",desc:"Droit de vote à 18 ans (Giscard)"},{year:"1975",desc:"Loi Veil sur l'IVG"},{year:"1981",desc:"Mitterrand élu / Abolition peine de mort"},{year:"1986",desc:"1ère cohabitation (Mitterrand/Chirac)"},{year:"2000",desc:"Quinquennat — mandat à 5 ans"}],
+people:[{name:"Giscard d'Estaing",role:"Président 1974-1981 (vote à 18 ans, IVG)"},{name:"Mitterrand",role:"Président 1981-1995, 1ère alternance gauche"},{name:"Simone Veil",role:"Ministre, loi IVG 1975"}],
+causes:"La Ve République s'adapte aux évolutions sociales. L'alternance gauche/droite et les cohabitations ponctuent son histoire.",
+deroulement:"Alternances politiques. Grandes réformes : abolition peine de mort (1981), 35h, décentralisation, quinquennat (2000). Cohabitations : président et PM de camps opposés.",
+fin:"La Ve République reste le cadre institutionnel de la France aujourd'hui, ayant prouvé sa solidité face aux crises.",
+notions:["Alternance","Cohabitation","Quinquennat","Décentralisation","IVG","Peine de mort"],
+quiz:[
+{q:"Qu'est-ce qu'une cohabitation sous la Ve République ?",options:["Une alliance entre deux partis","Un président et un PM de camps opposés","Un gouvernement d'union nationale","Une fusion de partis"],answer:1,explication:"La cohabitation : le président et le premier ministre appartiennent à des camps politiques opposés. Première cohabitation : 1986 (Mitterrand/Chirac)."},
+{q:"Quelle réforme Giscard adopte-t-il en 1974 concernant le vote ?",options:["Le vote internet","L'abaissement du droit de vote de 21 à 18 ans","Le vote obligatoire","La proportionnelle"],answer:1,explication:"Giscard d'Estaing abaisse l'âge du droit de vote de 21 à 18 ans en 1974."},
+{q:"Qui défend la loi légalisant l'IVG (1975) ?",options:["Simone de Beauvoir","Yvette Roudy","Simone Veil","Édith Cresson"],answer:2,explication:"Simone Veil, ministre de la Santé, fait adopter la loi légalisant l'IVG en 1975, malgré une forte opposition."},
+{q:"En quelle année la peine de mort est-elle abolie en France ?",options:["1975","1978","1981","1986"],answer:2,explication:"La peine de mort est abolie le 9 octobre 1981 sous le gouvernement Mitterrand, portée par Robert Badinter, garde des Sceaux."},
+{q:"Qu'est-ce que le quinquennat (2000) ?",options:["Mandat de 4 ans","Mandat présidentiel de 5 ans au lieu de 7","Mandat de PM de 5 ans","Limite à 5 mandats"],answer:1,explication:"Le quinquennat réduit le mandat présidentiel de 7 ans à 5 ans, adopté par référendum en 2000."},
+{q:"En quelle année Mitterrand est-il élu pour la première fois ?",options:["1974","1978","1981","1988"],answer:2,explication:"François Mitterrand est élu le 10 mai 1981, battant Giscard d'Estaing. C'est la 1ère alternance gauche sous la Ve République."}
+]},
+{id:"h9",title:"La société française (1950-1990)",
+dates:[{year:"1945-1975",desc:"Les Trente Glorieuses — forte croissance"},{year:"1968",desc:"Mai 68 — révolution culturelle et sociale"},{year:"1973-1979",desc:"Chocs pétroliers — fin des Trente Glorieuses"},{year:"1975",desc:"Loi Veil sur l'IVG"},{year:"1981",desc:"Abolition de la peine de mort"}],
+people:[{name:"Simone Veil",role:"Ministre, loi IVG 1975"},{name:"Robert Badinter",role:"Abolit la peine de mort en 1981"},{name:"Simone de Beauvoir",role:"Philosophe féministe, Le Deuxième Sexe"}],
+causes:"La Reconstruction et le baby-boom créent une société en transformation. L'exode rural, l'urbanisation et la société de consommation bouleversent les modes de vie.",
+deroulement:"Trente Glorieuses : classe moyenne, consommation de masse (voiture, TV), baby-boom, immigration. Mai 68 : révolution culturelle. Crise des années 70 : chômage et inégalités.",
+fin:"De 1975 à 1990 : désindustrialisation, droits des femmes (IVG 1975), immigration. Ces changements redéfinissent l'identité française.",
+notions:["Trente Glorieuses","Baby-boom","Société de consommation","Exode rural","Mai 68","Choc pétrolier"],
+quiz:[
+{q:"Comment appelle-t-on la période de forte croissance 1945-1975 ?",options:["La Belle Époque","Les Trente Glorieuses","La Reconstruction","Le Miracle français"],answer:1,explication:"Les Trente Glorieuses (Jean Fourastié) : 30 ans de forte croissance de 1945 à 1975, plein emploi, société de consommation."},
+{q:"Qu'est-ce que le baby-boom ?",options:["Une crise de natalité","Une forte hausse des naissances après 1945","Une politique d'immigration","Une hausse de mortalité infantile"],answer:1,explication:"Le baby-boom désigne la forte hausse des naissances après 1945 jusqu'en 1965. Ces baby-boomers transformeront la société française."},
+{q:"Qu'est-ce qui provoque la fin des Trente Glorieuses dans les années 1970 ?",options:["Une guerre mondiale","Les chocs pétroliers de 1973 et 1979","Une révolution politique","L'effondrement du dollar"],answer:1,explication:"Les chocs pétroliers (1973 et 1979) quadruplent le prix du pétrole, provoquant inflation et chômage. Fin des Trente Glorieuses."},
+{q:"Que signifie IVG ?",options:["Indice de Valeur du Gouvernement","Interruption Volontaire de Grossesse","Institut des Valeurs de la Gendarmerie","Intervention Volontaire du Gouvernement"],answer:1,explication:"L'IVG (Interruption Volontaire de Grossesse) est légalisée par la loi Veil de 1975. Avancée majeure pour les droits des femmes."},
+{q:"L'exode rural, c'est :",options:["L'immigration vers d'autres pays","La migration des campagnes vers les villes","Le départ vers les colonies","L'abandon des terres"],answer:1,explication:"L'exode rural est la migration des populations des campagnes vers les villes, accélérée par la mécanisation agricole."},
+{q:"Simone de Beauvoir est connue pour :",options:["La Condition ouvrière","Le Deuxième Sexe","La Femme mystifiée","Paroles de femmes"],answer:1,explication:"Simone de Beauvoir publie 'Le Deuxième Sexe' en 1949, ouvrage fondateur du féminisme moderne."}
+]}
+]},
+geo:{label:"Géographie",chapters:[
+{id:"g1",title:"Espaces de faible densité en France",
+dates:[{year:"Définition",desc:"< 30 hab/km² = espace de faible densité"},{year:"Tendance",desc:"Regain depuis les années 2000 (néorural)"},{year:"Enjeu",desc:"Désertification médicale et scolaire"}],
+people:[{name:"Néo-ruraux",role:"Citadins qui s'installent à la campagne"},{name:"DATAR",role:"Agence de développement du territoire"},{name:"Collectivités",role:"Régions, départements qui aménagent"}],
+causes:"En France, les espaces de faible densité couvrent 40% du territoire mais seulement 10% de la population. Ce sont les massifs montagneux (Massif Central, Alpes, Pyrénées), les zones rurales agricoles et les forêts.",
+deroulement:"Ces espaces font face à des défis : vieillissement, désertification médicale, fermeture d'écoles, commerces. Mais aussi des atouts : tourisme, agriculture, qualité de vie. Phénomène de néoruralité depuis 2000.",
+fin:"L'État et les collectivités aménagent ces territoires : numérique, transports, services publics. L'enjeu est d'assurer l'égalité des chances entre tous les territoires.",
+notions:["Désertification rurale","Néoruralité","Massif Central","Polyculture","Services à la population","Attractivité"],
+quiz:[
+{q:"Un espace de faible densité a moins de combien d'habitants par km² ?",options:["10 hab/km²","30 hab/km²","50 hab/km²","100 hab/km²"],answer:1,explication:"On parle d'espace de faible densité en dessous de 30 hab/km². Ces espaces couvrent 40% du territoire français."},
+{q:"Qu'est-ce qu'un néo-rural ?",options:["Un agriculteur moderne","Un citadin qui s'installe à la campagne","Un habitant de banlieue","Un migrant"],answer:1,explication:"Un néo-rural est un habitant des villes qui choisit de s'installer dans un espace rural, pour la qualité de vie. Ce mouvement s'accélère depuis les années 2000."},
+{q:"Quel est le principal problème de santé dans les zones rurales ?",options:["Pollution","Désertification médicale","Manque de sport","Mauvaise alimentation"],answer:1,explication:"La désertification médicale : manque de médecins généralistes dans les zones rurales. Les 'déserts médicaux' touchent des millions de Français."},
+{q:"Quel massif est emblématique des espaces de faible densité en France ?",options:["Vosges","Jura","Massif Central","Alpes"],answer:2,explication:"Le Massif Central est le symbole des espaces de faible densité : vaste plateau peu peuplé, agricole et touristique (volcanisme auvergnat)."},
+{q:"Quelle activité est un atout des espaces peu denses ?",options:["L'industrie lourde","Le tourisme et les loisirs","La finance","Les services numériques"],answer:1,explication:"Le tourisme est un atout majeur : montagne, patrimoine, nature. Ces espaces attirent randonneurs, skieurs, touristes verts."},
+{q:"Que fait l'État pour maintenir les services dans les zones rurales ?",options:["Rien","Maisons France Services, numérique","Il ferme les services","Il déplace la population"],answer:1,explication:"L'État crée des Maisons France Services (multi-services), déploie le très haut débit, maintient des écoles et des gares pour lutter contre le déclin rural."}
+]},
+{id:"g2",title:"La France et l'UE dans le monde",
+dates:[{year:"1957",desc:"Traité de Rome — création de la CEE"},{year:"1993",desc:"Traité de Maastricht — naissance de l'UE"},{year:"1999",desc:"Lancement de l'euro"},{year:"2016",desc:"Brexit : le Royaume-Uni quitte l'UE"}],
+people:[{name:"UE",role:"Union Européenne : 27 États membres"},{name:"France",role:"5e puissance mondiale, membre fondateur UE"},{name:"DROM-COM",role:"Territoires français hors métropole"}],
+causes:"La France est une puissance mondiale : membre permanent du Conseil de Sécurité de l'ONU, puissance nucléaire, 5e économie mondiale. L'UE est le 1er espace économique mondial.",
+deroulement:"La France rayonne par sa langue (5e langue mondiale), sa culture, son réseau diplomatique. L'UE s'appuie sur le marché unique, l'euro, la libre circulation des personnes. Mais elle fait face à des défis : Brexit, populisme, migrations.",
+fin:"La France doit articuler ses intérêts nationaux et son rôle dans l'UE et le monde. Enjeux : souveraineté, compétitivité, influence culturelle.",
+notions:["UE","Euro","Marché unique","DROM-COM","Schengen","Conseil de sécurité ONU"],
+quiz:[
+{q:"Combien de pays composent l'Union Européenne actuellement ?",options:["25","27","28","30"],answer:1,explication:"Depuis le Brexit (2020), l'UE compte 27 États membres. Le Royaume-Uni l'a quittée suite au référendum de 2016."},
+{q:"En quelle année l'euro est-il lancé ?",options:["1993","1995","1999","2002"],answer:2,explication:"L'euro est lancé en 1999 comme monnaie virtuelle, et devient une monnaie fiduciaire (billets et pièces) en 2002."},
+{q:"Qu'est-ce que les DROM-COM ?",options:["Des régions françaises en métropole","Les territoires français hors de métropole","Les pays de la Francophonie","Des organisations internationales"],answer:1,explication:"Les DROM-COM (Départements et Régions d'Outre-Mer, Collectivités d'Outre-Mer) sont les territoires français hors de métropole : Martinique, Réunion, Polynésie, etc."},
+{q:"Qu'est-ce que l'espace Schengen ?",options:["Un accord militaire","La zone euro","L'espace de libre circulation sans contrôle aux frontières","Une alliance commerciale"],answer:2,explication:"L'espace Schengen (26 pays) supprime les contrôles aux frontières intérieures, permettant la libre circulation des personnes."},
+{q:"Quel rang la France occupe-t-elle au Conseil de Sécurité de l'ONU ?",options:["Membre tournant","Observateur","Membre permanent","Président permanent"],answer:2,explication:"La France est l'un des 5 membres permanents du Conseil de Sécurité de l'ONU (avec USA, Russie, Chine, RU). Elle dispose d'un droit de veto."},
+{q:"Qu'est-ce que le Brexit ?",options:["L'entrée du Royaume-Uni dans l'UE","La sortie du Royaume-Uni de l'UE","Un référendum français","Une crise de l'euro"],answer:1,explication:"Le Brexit est la sortie du Royaume-Uni de l'Union Européenne, décidée par référendum en 2016 et effective en 2020."}
+]},
+{id:"g3",title:"Aménager le territoire : réduire les inégalités",
+dates:[{year:"1963",desc:"Création de la DATAR — aménagement du territoire"},{year:"1982",desc:"Lois de décentralisation"},{year:"2000",desc:"Loi SRU — mixité sociale dans les villes"},{year:"2015",desc:"Loi NOTRe — nouvelles régions"}],
+people:[{name:"DATAR",role:"Délégation à l'aménagement du territoire (État)"},{name:"Collectivités",role:"Régions, départements, communes : acteurs locaux"},{name:"UE",role:"Fonds FEDER pour réduire les inégalités régionales"}],
+causes:"La France présente de fortes inégalités territoriales : entre Paris et les régions, entre villes et campagnes, entre littoraux dynamiques et intérieur.",
+deroulement:"L'État aménage : grands travaux (TGV, autoroutes), décentralisation (1982), politique de la ville (ZEP, ZUS). L'UE finance les régions défavorisées via les fonds structurels (FEDER).",
+fin:"Les inégalités persistent malgré les politiques. Enjeux actuels : fracture numérique, mobilité, accès aux services. Les 'gilets jaunes' (2018) ont révélé la fracture entre métropoles et 'France périphérique'.",
+notions:["Décentralisation","Aménagement du territoire","ZUS","FEDER","Métropole","Fracture territoriale"],
+quiz:[
+{q:"Qu'est-ce que la décentralisation de 1982 ?",options:["La centralisation des pouvoirs à Paris","Le transfert de pouvoirs de l'État aux collectivités locales","La création de nouvelles régions","La réforme de l'administration"],answer:1,explication:"Les lois Defferre (1982) transfèrent des pouvoirs de l'État vers les régions, départements et communes. Les collectivités gèrent leur territoire."},
+{q:"À quoi servent les fonds FEDER de l'UE ?",options:["À financer l'armée européenne","À réduire les inégalités entre régions européennes","À construire des routes en France","À financer l'agriculture"],answer:1,explication:"Le FEDER (Fonds Européen de Développement Régional) finance des projets dans les régions défavorisées pour réduire les inégalités."},
+{q:"Qu'est-ce qu'une métropole en géographie française ?",options:["La capitale d'un pays","Une grande ville-centre avec un rôle régional fort","Un département","Une zone industrielle"],answer:1,explication:"Une métropole est une grande ville qui concentre emplois, services, décisions et rayonne sur une grande zone. Paris, Lyon, Bordeaux, Nantes sont des métropoles."},
+{q:"Qu'est-ce que la fracture numérique ?",options:["Panne d'internet","Inégalité d'accès au numérique selon les territoires","Guerre des opérateurs","Coupure de câble sous-marin"],answer:1,explication:"La fracture numérique désigne les inégalités d'accès à internet entre les villes (fibre) et certaines zones rurales (débit faible). L'État déploie le plan France THD."},
+{q:"Le mouvement des 'gilets jaunes' (2018) révèle quelle fracture ?",options:["Nord/Sud","Riche/Pauvre","Métropoles/France périphérique","Jeunes/Vieux"],answer:2,explication:"Les gilets jaunes ont montré la fracture entre les métropoles dynamiques et la 'France périphérique' : petites villes, zones rurales qui se sentent oubliées."},
+{q:"La loi NOTRe (2015) réforme quoi ?",options:["Les impôts locaux","L'organisation des régions (13 régions)","La police municipale","L'éducation nationale"],answer:1,explication:"La loi NOTRe (2015) réduit le nombre de régions de 22 à 13 pour les rendre plus compétitives à l'échelle européenne."}
+]}
+]},
+emc:{label:"EMC",chapters:[
+{id:"e1",title:"Être citoyen français et européen",
+dates:[{year:"1789",desc:"Déclaration des Droits de l'Homme et du Citoyen"},{year:"1944",desc:"Droit de vote accordé aux femmes"},{year:"1974",desc:"Droit de vote à 18 ans"},{year:"1992",desc:"Citoyenneté européenne (Maastricht)"}],
+people:[{name:"Citoyen",role:"Personne ayant droits et devoirs dans une démocratie"},{name:"Badinter",role:"Abolit la peine de mort, défenseur des libertés"},{name:"Simone Veil",role:"Défense des droits des femmes"}],
+causes:"La citoyenneté française donne des droits (voter, être élu, liberté d'expression) et des devoirs (respecter la loi, payer les impôts, défendre le pays). Elle est fondée sur les valeurs républicaines.",
+deroulement:"La citoyenneté s'acquiert par naissance (droit du sol / droit du sang) ou naturalisation. Depuis Maastricht (1992), tout Européen est aussi citoyen européen. Les droits civiques : voter aux élections européennes et municipales.",
+fin:"Être citoyen, c'est participer à la vie démocratique : voter, s'engager, respecter les règles communes. Les valeurs républicaines : Liberté, Égalité, Fraternité, Laïcité.",
+notions:["Citoyenneté","Droit du sol","Droit du sang","Suffrage universel","Laïcité","Valeurs républicaines"],
+quiz:[
+{q:"En quelle année les femmes obtiennent-elles le droit de vote en France ?",options:["1936","1940","1944","1958"],answer:2,explication:"Le droit de vote est accordé aux femmes françaises par ordonnance du Gouvernement Provisoire le 21 avril 1944, appliqué pour la 1ère fois en 1945."},
+{q:"Qu'est-ce que le droit du sol ?",options:["Le droit de posséder des terres","La citoyenneté accordée selon le pays de naissance","La citoyenneté accordée selon la nationalité des parents","Le droit à l'éducation"],answer:1,explication:"Le droit du sol accorde la nationalité selon le pays de naissance. En France, un enfant né de parents étrangers peut devenir français."},
+{q:"Quelles sont les trois valeurs de la devise républicaine ?",options:["Travail, Famille, Patrie","Liberté, Égalité, Fraternité","Justice, Vérité, Solidarité","Paix, Progrès, Démocratie"],answer:1,explication:"La devise de la République française est 'Liberté, Égalité, Fraternité', inscrite dans la Constitution et sur les frontons des bâtiments publics."},
+{q:"À quel âge peut-on voter en France ?",options:["16 ans","17 ans","18 ans","21 ans"],answer:2,explication:"Le droit de vote est accordé à 18 ans depuis 1974 (réforme Giscard). Avant, il fallait avoir 21 ans."},
+{q:"Qu'est-ce que la laïcité ?",options:["La pratique d'une religion","La séparation de l'Église et de l'État","L'interdiction des religions","Un impôt sur le culte"],answer:1,explication:"La laïcité (loi de 1905) sépare l'Église et l'État. L'État ne finance aucune religion, garantit la liberté de conscience et la neutralité dans les services publics."},
+{q:"Depuis quel traité existe la citoyenneté européenne ?",options:["Traité de Rome (1957)","Traité de Maastricht (1992)","Traité d'Amsterdam","Traité de Lisbonne"],answer:1,explication:"Le Traité de Maastricht (1992) crée la citoyenneté européenne : tout citoyen d'un État membre est aussi citoyen européen, avec droits de vote aux élections européennes."}
+]},
+{id:"e2",title:"Le citoyen et la défense nationale",
+dates:[{year:"1905",desc:"Fin du service militaire obligatoire... puis rétabli"},{year:"1997",desc:\"Suspension du service militaire — armée professionnelle"},{year:"1998",desc:"Journée Défense et Citoyenneté (JDC) créée"},{year:"2015",desc:"Attentats de Paris — état d'urgence"}],
+people:[{name:"Armée de Terre",role:"Force terrestre de défense"},{name:"OTAN",role:"Alliance militaire occidentale"},{name:"SNU",role:"Service National Universel (en expérimentation)"}],
+causes:"La défense nationale est un devoir du citoyen. Depuis 1997, la France a une armée professionnelle. Mais le citoyen reste concerné par la sécurité nationale.",
+deroulement:"Aujourd'hui : JDC (Journée Défense et Citoyenneté) obligatoire pour tous les jeunes Français. SNU en expérimentation. L'armée professionnelle assure les missions intérieures (Sentinelle) et extérieures (OPEX). La France est membre de l'OTAN.",
+fin:"Le citoyen contribue à la défense par le respect des lois, la réserve militaire, et l'engagement civique. La menace terroriste a renforcé la conscience citoyenne.",
+notions:["Armée professionnelle","JDC","SNU","OTAN","OPEX","Plan Vigipirate"],
+quiz:[
+{q:"Depuis quand la France a-t-elle une armée professionnelle ?",options:["1945","1981","1997","2001"],answer:2,explication:"La conscription (service militaire obligatoire) est suspendue en 1997 par le président Chirac. La France se dote d'une armée de métier professionnelle."},
+{q:"Que signifie JDC ?",options:["Journée De Combat","Journée Défense et Citoyenneté","Journée Du Citoyen","Justice, Défense, Citoyenneté"],answer:1,explication:"La JDC (Journée Défense et Citoyenneté) est obligatoire pour tous les jeunes Français à 16-25 ans. Elle présente les enjeux de la défense nationale."},
+{q:"Qu'est-ce que l'OTAN ?",options:["L'organisation des Nations Unies","Une alliance militaire occidentale dont la France fait partie","L'Union Européenne militaire","L'armée française"],answer:1,explication:"L'OTAN (Organisation du Traité de l'Atlantique Nord) est une alliance militaire créée en 1949. La France l'a réintégrée pleinement en 2009."},
+{q:"Que signifie OPEX ?",options:["Opération Expérimentale","Opération Extérieure","Opération d'Exception","Organisation Professionnelle Experte"],answer:1,explication:"Les OPEX (Opérations Extérieures) sont les missions militaires françaises hors de France : Mali, Liban, Irak... La France y est très engagée."},
+{q:"L'opération Sentinelle en France consiste à :",options:["Surveiller les frontières","Protéger les sites sensibles après les attentats","Former les recrues","Patrouiller en mer"],answer:1,explication:"L'opération Sentinelle déploie des soldats sur le territoire national depuis les attentats de 2015 pour protéger les lieux sensibles (gares, synagogues, musées)."},
+{q:"Qu'est-ce que le plan Vigipirate ?",options:["Un plan d'évacuation des villes","Le dispositif de vigilance et de protection contre le terrorisme","Un plan militaire secret","Un programme de sécurité informatique"],answer:1,explication:"Le plan Vigipirate est le dispositif permanent de sécurité contre la menace terroriste. Il existe depuis 1978 et comporte plusieurs niveaux d'alerte."}
+]}
+]},
+sciences:{label:"Physique-Chimie & SVT",chapters:[
+{id:"pc1",title:"Électricité : loi d'Ohm et circuits",
+dates:[{year:"Formules clés",desc:"U = R × I | P = U × I | P = R × I²"},{year:"Georg Ohm",desc:"1827 — formule fondamentale U=RI"},{year:"Attention",desc:"Série : même I / Parallèle : même U"}],
+people:[{name:"Georg Ohm",role:"Physicien allemand — loi d'Ohm"},{name:"Volt",role:"U : tension en Volts (V)"},{name:"Ampère",role:"I : intensité en Ampères (A)"}],
+causes:"L'électricité est au cœur de notre vie quotidienne. Il faut maîtriser les lois fondamentales des circuits électriques.",
+deroulement:"LOI D'OHM : U = R × I (tension = résistance × intensité). PUISSANCE : P = U × I. CIRCUITS EN SÉRIE : même intensité I dans tout le circuit, tensions s'ajoutent (U = U1 + U2). CIRCUITS EN PARALLÈLE : même tension U aux bornes, intensités s'ajoutent (I = I1 + I2). En série : R_total = R1 + R2. En parallèle : 1/R_total = 1/R1 + 1/R2.",
+fin:"Toujours identifier d'abord le type de circuit (série ou parallèle). Puis appliquer la bonne loi. Vérifier les unités : V, A, Ω, W.",
+notions:["Loi d'Ohm","Tension U (Volt)","Intensité I (Ampère)","Résistance R (Ohm)","Puissance P (Watt)","Circuit série","Circuit parallèle"],
+quiz:[
+{q:"Quelle est la formule de la loi d'Ohm ?",options:["P = U × I","U = R × I","I = U × R","R = U + I"],answer:1,explication:"La loi d'Ohm est U = R × I : la tension (en Volts) est égale à la résistance (en Ohms) multipliée par l'intensité (en Ampères)."},
+{q:"Dans un circuit en série, comment se répartit l'intensité ?",options:["Elle s'ajoute","Elle se divise","Elle est identique partout","Elle varie"],answer:2,explication:"Dans un circuit en série, l'intensité I est la même partout dans le circuit. C'est la tension qui se répartit (U = U1 + U2)."},
+{q:"Un dipôle a une résistance de 10 Ω et est traversé par 2 A. Quelle est la tension à ses bornes ?",options:["5 V","12 V","20 V","0,2 V"],answer:2,explication:"U = R × I = 10 × 2 = 20 V. Toujours vérifier les unités : résistance en Ω, intensité en A, tension en V."},
+{q:"La puissance électrique se calcule avec :",options:["P = R × I","P = U × I","P = U + I","P = U / I"],answer:1,explication:"La puissance électrique P (en Watts) = U × I (tension en Volts × intensité en Ampères). On peut aussi écrire P = R × I²."},
+{q:"Dans un circuit en parallèle, que se passe-t-il pour la tension ?",options:["Elle s'additionne","Elle se divise","Elle est identique aux bornes de chaque branche","Elle est nulle"],answer:2,explication:"Dans un circuit en parallèle, la tension U est identique aux bornes de chaque branche. L'intensité se répartit entre les branches."},
+{q:"Si R1 = 4 Ω et R2 = 6 Ω en série, quelle est la résistance totale ?",options:["2,4 Ω","10 Ω","24 Ω","0,4 Ω"],answer:1,explication:"En série : R_total = R1 + R2 = 4 + 6 = 10 Ω. En parallèle, ce serait : 1/R = 1/4 + 1/6 = 5/12, donc R = 2,4 Ω."}
+]},
+{id:"pc2",title:"Énergie et environnement",
+dates:[{year:"1973",desc:"1er choc pétrolier — crise de l'énergie fossile"},{year:"1986",desc:"Catastrophe de Tchernobyl"},{year:"2015",desc:"Accord de Paris sur le climat"},{year:"2050",desc:"Objectif neutralité carbone de la France"}],
+people:[{name:"GIEC",role:"Groupe d'experts sur l'évolution du climat"},{name:"Fossile",role:"Pétrole, gaz, charbon = énergie non renouvelable"},{name:"ENR",role:"Énergies Renouvelables : soleil, vent, eau"}],
+causes:"La combustion des énergies fossiles produit du CO₂ qui renforce l'effet de serre naturel. Le réchauffement climatique en résulte.",
+deroulement:"FORMES D'ÉNERGIE : cinétique (mouvement), potentielle (hauteur), thermique (chaleur), lumineuse, chimique, électrique. EFFET DE SERRE : les gaz (CO₂, méthane) piègent la chaleur. ÉNERGIES RENOUVELABLES : solaire, éolien, hydraulique, biomasse. BILAN ÉNERGÉTIQUE : énergie ne se crée pas, se transforme (Lavoisier-énergie).",
+fin:"La transition énergétique vise à réduire les fossiles et développer les ENR. La France : 70% nucléaire, objectif 40% ENR en 2030. Chaque citoyen peut agir : isolation, transports doux, économies d'énergie.",
+notions:["Effet de serre","CO₂","Énergies fossiles","Énergies renouvelables","Transition énergétique","Bilan carbone"],
+quiz:[
+{q:"Quels gaz sont principalement responsables de l'effet de serre additionnel ?",options:["O₂ et N₂","CO₂ et méthane","H₂O et O₃","Ar et He"],answer:1,explication:"Le CO₂ (dioxyde de carbone) et le méthane (CH₄) sont les principaux gaz à effet de serre d'origine humaine. Ils piègent la chaleur dans l'atmosphère."},
+{q:"Quelle est la principale source d'électricité en France ?",options:["Le charbon","L'éolien","Le nucléaire","Le solaire"],answer:2,explication:"La France produit environ 70% de son électricité grâce au nucléaire, ce qui lui donne une faible empreinte carbone électrique."},
+{q:"L'énergie éolienne utilise :",options:["La chaleur du soleil","La force du vent","La chaleur de la Terre","L'énergie des marées"],answer:1,explication:"L'énergie éolienne convertit l'énergie cinétique du vent en électricité via des turbines (éoliennes). C'est une énergie renouvelable et non-polluante."},
+{q:"Qu'est-ce que la transition énergétique ?",options:["Le passage d'une centrale à une autre","Le passage des énergies fossiles aux énergies renouvelables","L'augmentation de la production nucléaire","La réduction de la consommation"],answer:1,explication:"La transition énergétique est le passage d'un système basé sur les fossiles (pétrole, charbon, gaz) vers les énergies renouvelables (solaire, éolien) pour réduire les émissions de CO₂."},
+{q:"Le principe de conservation de l'énergie dit que l'énergie :",options:["Se crée lors d'une réaction","Se détruit lors d'une réaction","Se transforme mais ne se crée ni ne se détruit","Augmente toujours"],answer:2,explication:"L'énergie se conserve : elle ne se crée ni ne se détruit, elle se transforme d'une forme en une autre (chimique → thermique → électrique par exemple)."},
+{q:"Qu'est-ce qu'une énergie fossile ?",options:["Une énergie renouvelable","Une énergie issue de la décomposition d'êtres vivants anciens (pétrole, gaz, charbon)","L'énergie nucléaire","L'énergie solaire"],answer:1,explication:"Les énergies fossiles (pétrole, gaz naturel, charbon) sont issues de la décomposition d'organismes vivants sur des millions d'années. Elles sont non renouvelables."}
+]},
+{id:"pc3",title:"Chimie : atome, molécule, réactions",
+dates:[{year:"Loi Lavoisier",desc:"Rien ne se perd, rien ne se crée, tout se transforme"},{year:"Modèle atomique",desc:"Noyau (protons+neutrons) + électrons"},{year:"Combustion",desc:"Fuel + O₂ → CO₂ + H₂O + énergie"}],
+people:[{name:"Lavoisier",role:"Conservation de la masse (1789)"},{name:"Mendeleïev",role:"Tableau périodique des éléments"},{name:"Dalton",role:"Modèle atomique moderne"}],
+causes:"La matière est composée d'atomes qui s'assemblent en molécules. Les réactions chimiques transforment les molécules sans créer ni détruire de matière.",
+deroulement:"ATOME : noyau (protons+, neutrons) entouré d'électrons. Nombre de protons = numéro atomique. MOLÉCULE : assemblage d'atomes (H₂O = 2H + 1O). LOI DE LAVOISIER : masse totale conservée avant/après réaction. COMBUSTION : méthane CH₄ + 2O₂ → CO₂ + 2H₂O. Équation doit être équilibrée (même nombre d'atomes de chaque côté).",
+fin:"Savoir équilibrer une équation chimique. Appliquer la conservation des masses. Identifier réactifs (gauche) et produits (droite).",
+notions:["Atome","Molécule","Proton","Neutron","Électron","Loi de Lavoisier","Équation chimique","Combustion"],
+quiz:[
+{q:"Que dit la loi de Lavoisier ?",options:["L'énergie se transforme","La masse se conserve lors d'une réaction chimique","Les atomes disparaissent","La température reste constante"],answer:1,explication:"La loi de conservation de la masse (Lavoisier, 1789) : la masse totale des réactifs = masse totale des produits. 'Rien ne se perd, rien ne se crée, tout se transforme.'"},
+{q:"Qu'est-ce qu'un atome ?",options:["La plus petite molécule","La plus petite particule d'un élément chimique","Un groupe d'éléments","Une particule de lumière"],answer:1,explication:"L'atome est la plus petite particule d'un élément chimique. Il est composé d'un noyau (protons et neutrons) entouré d'électrons."},
+{q:"La molécule d'eau H₂O contient :",options:["1 hydrogène et 2 oxygènes","2 hydrogènes et 1 oxygène","2 hydrogènes et 2 oxygènes","1 hydrogène et 1 oxygène"],answer:1,explication:"H₂O : 2 atomes d'hydrogène (H) et 1 atome d'oxygène (O). Le chiffre en indice indique le nombre d'atomes."},
+{q:"Dans une équation chimique équilibrée, le nombre d'atomes :",options:["Augmente du côté des produits","Diminue","Est identique des deux côtés","N'a pas d'importance"],answer:2,explication:"Une équation chimique est équilibrée quand il y a autant d'atomes de chaque élément des deux côtés (réactifs = produits). C'est l'application de la loi de Lavoisier."},
+{q:"Qu'est-ce qu'une combustion complète ?",options:["Réaction sans oxygène","Réaction avec excès d'oxygène → CO₂ + H₂O","Réaction produisant du carbone","Réaction sans chaleur"],answer:1,explication:"La combustion complète est une réaction avec assez d'oxygène : le carburant brûle entièrement → CO₂ + H₂O. Incomplète = production de CO (toxique) et suie."},
+{q:"Les électrons se trouvent :",options:["Dans le noyau de l'atome","Sur des couches autour du noyau","Entre les noyaux","Dans les molécules uniquement"],answer:1,explication:"Les électrons gravitent autour du noyau sur des couches électroniques. Ce sont eux qui participent aux liaisons chimiques entre atomes."}
+]},
+{id:"svt1",title:"Corps humain et santé",
+dates:[{year:"Digestion",desc:"Bouche → Estomac → Intestin grêle → Colon"},{year:"ADN",desc:"Support de l'information génétique (double hélice)"},{year:"Vaccination",desc:"Stimule les défenses immunitaires"}],
+people:[{name:"Pasteur",role:"Vaccination, microbiologie"},{name:"Fleming",role:"Découverte de la pénicilline (antibiotique)"},{name:"Watson & Crick",role:"Structure de l'ADN en double hélice (1953)"}],
+causes:"Le corps humain est un système complexe : digestion, circulation, immunité, reproduction. La santé dépend du bon fonctionnement de ces systèmes.",
+deroulement:"DIGESTION : transformation mécanique et chimique des aliments. Enzymes digestives. Absorption dans l'intestin grêle. CIRCULATION : cœur (pompe) → artères → veines → capillaires. IMMUNITÉ : 1ère ligne (peau, mucus), 2e ligne (phagocytes), 3e ligne (lymphocytes, anticorps). VACCINATION : injecter un antigène affaibli pour que le corps produise des anticorps sans tomber malade. ADN : contenu dans le noyau des cellules, porte l'information génétique.",
+fin:"Connaître les grandes étapes de la digestion et de la circulation. Comprendre comment le système immunitaire fonctionne et l'intérêt de la vaccination.",
+notions:["ADN","Enzyme","Anticorps","Lymphocyte","Phagocyte","Vaccination","Antigène","Circulation"],
+quiz:[
+{q:"Où se trouve l'ADN dans la cellule ?",options:["Dans la membrane","Dans le cytoplasme","Dans le noyau","Dans les mitochondries"],answer:2,explication:"L'ADN (Acide DésoxyriboNucléique) se trouve dans le noyau de la cellule, enroulé en chromosomes. Il contient l'information génétique."},
+{q:"Quel est le rôle des anticorps ?",options:["Transporter l'oxygène","Neutraliser les agents pathogènes","Digérer les aliments","Produire de l'énergie"],answer:1,explication:"Les anticorps sont des protéines produites par les lymphocytes B qui reconnaissent et neutralisent les agents pathogènes (virus, bactéries)."},
+{q:"Comment fonctionne la vaccination ?",options:["Elle détruit les microbes directement","Elle stimule le système immunitaire pour produire des anticorps sans tomber malade","Elle remplace les globules blancs","Elle désinfecte le sang"],answer:1,explication:"La vaccination introduit un antigène affaibli ou inactivé dans l'organisme. Le système immunitaire produit des anticorps. En cas de vraie infection, le corps réagit rapidement."},
+{q:"Dans quel ordre les aliments passent-ils lors de la digestion ?",options:["Estomac → Bouche → Intestin","Bouche → Estomac → Intestin grêle → Colon","Intestin → Estomac → Bouche","Colon → Intestin → Estomac"],answer:1,explication:"La digestion se fait dans l'ordre : bouche (mastication, salive) → estomac (acide) → intestin grêle (absorption) → côlon (eau) → élimination."},
+{q:"Quelle est la différence entre artère et veine ?",options:["Les artères transportent le sang vers le cœur","Les artères partent du cœur, les veines y reviennent","Les veines sont plus grosses","Les artères transportent du sang non oxygéné"],answer:1,explication:"Les artères transportent le sang depuis le cœur vers les organes. Les veines ramènent le sang des organes vers le cœur."},
+{q:"Un antibiotique agit contre :",options:["Les virus","Les bactéries","Les champignons uniquement","Toutes les infections"],answer:1,explication:"Les antibiotiques (pénicilline, amoxicilline...) agissent uniquement contre les bactéries. Ils sont INEFFICACES contre les virus (grippe, rhume, Covid)."}
+]},
+{id:"svt2",title:"Évolution et diversité du vivant",
+dates:[{year:"1859",desc:"Darwin publie 'De l'origine des espèces'"},{year:"1866",desc:"Mendel — lois de l'hérédité"},{year:"Paléontologie",desc:"Étude des fossiles = preuves de l'évolution"}],
+people:[{name:"Darwin",role:"Théorie de l'évolution par sélection naturelle"},{name:"Lamarck",role:"1er à proposer une théorie évolutive (1809)"},{name:"Mendel",role:"Lois de l'hérédité — gènes"}],
+causes:"La vie sur Terre existe depuis 3,8 milliards d'années et s'est diversifiée par évolution. Les espèces actuelles descendent d'ancêtres communs.",
+deroulement:"DARWIN : variations héréditaires entre individus → sélection naturelle (les mieux adaptés survivent et se reproduisent) → évolution des espèces. PREUVES : fossiles (âge croissant), homologies anatomiques (os des membres des vertébrés), ADN comparé. BIODIVERSITÉ : variété des espèces, des gènes et des écosystèmes. MENACES : destruction des habitats, pollution, changement climatique.",
+fin:"L'évolution n'a pas de 'but' : elle résulte d'une sélection aléatoire des individus les mieux adaptés à leur environnement. Ce n'est pas la volonté qui fait évoluer.",
+notions:["Sélection naturelle","Adaptation","Fossile","Biodiversité","Espèce","Ancêtre commun","Hérédité","Gène"],
+quiz:[
+{q:"Qui a proposé la théorie de la sélection naturelle ?",options:["Lamarck","Mendel","Darwin","Pasteur"],answer:2,explication:"Charles Darwin publie 'De l'origine des espèces' en 1859. Il propose que les individus les mieux adaptés à leur environnement survivent et transmettent leurs caractères."},
+{q:"Qu'est-ce que la sélection naturelle ?",options:["Une sélection faite par les humains","La survie et reproduction préférentielle des individus les mieux adaptés","Une mutation génétique","Le croisement artificiel d'espèces"],answer:1,explication:"La sélection naturelle : dans un environnement donné, les individus ayant des caractères favorables (variations héréditaires) survivent mieux et se reproduisent davantage."},
+{q:"Qu'est-ce qu'un fossile ?",options:["Un os d'animal actuel","Les restes ou traces d'organismes du passé conservés dans les roches","Un animal préhistorique vivant","Une empreinte actuelle"],answer:1,explication:"Un fossile est un reste (os, coquille, empreinte) d'un organisme passé conservé dans les roches sédimentaires. Les fossiles sont des preuves directes de l'évolution."},
+{q:"Qu'est-ce que la biodiversité ?",options:["Le nombre d'espèces seulement","La diversité des espèces, des gènes et des écosystèmes","La diversité des paysages","La diversité des cultures humaines"],answer:1,explication:"La biodiversité désigne la diversité du vivant à trois niveaux : diversité des espèces, diversité génétique au sein des espèces, et diversité des écosystèmes."},
+{q:"Quelle est la principale menace actuelle pour la biodiversité ?",options:["L'évolution naturelle","La destruction des habitats naturels par l'Homme","Les maladies naturelles","Les catastrophes volcaniques"],answer:1,explication:"La destruction des habitats (déforestation, urbanisation, agriculture intensive) est la principale cause d'extinction des espèces, devant la pollution et le changement climatique."},
+{q:"Comment les homologies anatomiques prouvent-elles l'évolution ?",options:["En montrant que toutes les espèces sont identiques","En montrant que des espèces différentes partagent des structures osseuses semblables (ancêtre commun)","En montrant que les espèces n'évoluent pas","En montrant que les fossiles ressemblent aux espèces actuelles"],answer:1,explication:"Les homologies anatomiques (ex: le bras humain, la patte du cheval, l'aile de chauve-souris ont les mêmes os) prouvent un ancêtre commun et donc l'évolution."}
+]}
+]},
+maths:{label:"Mathématiques",chapters:[
+{id:"m1",title:"Calcul numérique et fractions",
+dates:[{year:"Priorités",desc:"Parenthèses → Puissances → × ÷ → + −"},{year:"Fractions",desc:"a/b × c/d = ac/bd | a/b ÷ c/d = a/b × d/c"},{year:"Puissances",desc:"aⁿ × aᵐ = aⁿ⁺ᵐ | a⁻ⁿ = 1/aⁿ"}],
+people:[{name:"Numérateur",role:"Nombre du haut d'une fraction"},{name:"Dénominateur",role:"Nombre du bas d'une fraction"},{name:"PGCD",role:"Plus Grand Commun Diviseur"}],
+causes:"Le calcul numérique est la base de toutes les mathématiques. Il faut maîtriser fractions, puissances et notation scientifique.",
+deroulement:"FRACTIONS : addition (même dénominateur). Simplification par PGCD. PUISSANCES : a⁰=1, a⁻ⁿ=1/aⁿ, aⁿ×aᵐ=aⁿ⁺ᵐ, aⁿ/aᵐ=aⁿ⁻ᵐ, (aⁿ)ᵐ=aⁿˣᵐ. NOTATION SCIENTIFIQUE : a × 10ⁿ avec 1≤a<10. Ex : 0,0045 = 4,5 × 10⁻³.",
+fin:"Toujours simplifier les fractions. Vérifier les calculs avec des estimations. La notation scientifique sert à écrire les très grands ou très petits nombres.",
+notions:["Fraction","Dénominateur commun","PGCD","Puissance","Notation scientifique","Racine carrée"],
+quiz:[
+{q:"Quelle est la priorité dans 3 + 4 × 2 ?",options:["3 + 4 d'abord = 7 × 2 = 14","4 × 2 d'abord = 8, puis 3 + 8 = 11","3 × 4 = 12, puis 12 + 2","On calcule de gauche à droite : 14"],answer:1,explication:"Priorité des opérations : les multiplications et divisions avant les additions et soustractions. Donc 4 × 2 = 8, puis 3 + 8 = 11."},
+{q:"Comment additionner 1/3 + 1/4 ?",options:["2/7","7/12","2/12","1/12"],answer:1,explication:"Pour additionner des fractions : trouver le dénominateur commun (12). 1/3 = 4/12, 1/4 = 3/12. Donc 4/12 + 3/12 = 7/12."},
+{q:"Que vaut 2⁻³ ?",options:["-8","1/8","-6","6"],answer:1,explication:"a⁻ⁿ = 1/aⁿ. Donc 2⁻³ = 1/2³ = 1/8."},
+{q:"Comment écrire 0,00045 en notation scientifique ?",options:["4,5 × 10⁻⁴","4,5 × 10⁴","45 × 10⁻⁵","0,45 × 10⁻³"],answer:0,explication:"0,00045 = 4,5 × 10⁻⁴. Pour trouver l'exposant : compter les zéros après la virgule (4 positions). La mantisse doit être entre 1 et 10."},
+{q:"Simplifier 12/18 :",options:["6/9","2/3","4/6","3/4"],answer:1,explication:"PGCD(12,18) = 6. 12÷6 = 2, 18÷6 = 3. Donc 12/18 = 2/3. Toujours simplifier au maximum."},
+{q:"Combien vaut 3² × 3³ ?",options:["9⁵","3⁵","3⁶","6⁶"],answer:1,explication:"aⁿ × aᵐ = aⁿ⁺ᵐ. Donc 3² × 3³ = 3²⁺³ = 3⁵ = 243."}
+]},
+{id:"m2",title:"Algèbre : équations et inéquations",
+dates:[{year:"Équation 1er degré",desc:"ax + b = 0 → x = -b/a"},{year:"Équation 2nd degré",desc:"ax² + bx + c = 0 → Δ = b² - 4ac"},{year:"Inéquation",desc:"Si on multiplie par négatif : inverser le sens"}],
+people:[{name:"Discriminant Δ",desc:""},{name:"Δ > 0",role:"2 solutions : x = (-b ± √Δ) / 2a"},{name:"Δ = 0",role:"1 solution double : x = -b/2a"},{name:"Δ < 0",role:"Pas de solution réelle"}],
+causes:"Les équations permettent de résoudre des problèmes en posant une inconnue x. Elles sont fondamentales en maths et en sciences.",
+deroulement:"ÉQUATION 1er DEGRÉ : isoler x par opérations inverses. ÉQUATION 2nd DEGRÉ : calculer Δ = b² - 4ac. Si Δ>0 : x₁=(-b+√Δ)/2a et x₂=(-b-√Δ)/2a. SYSTÈME : méthode substitution ou addition. INÉQUATION : résoudre comme équation, attention au sens si on divise par négatif.",
+fin:"Toujours vérifier la solution en la remplaçant dans l'équation. Pour les inéquations, penser à inverser le signe si on multiplie/divise par un nombre négatif.",
+notions:["Équation","Inconnue","Discriminant","Racine","Inéquation","Système d'équations"],
+quiz:[
+{q:"Résoudre 3x - 6 = 0",options:["x = 6","x = 2","x = -2","x = 18"],answer:1,explication:"3x - 6 = 0 → 3x = 6 → x = 6/3 = 2. Vérification : 3(2) - 6 = 6 - 6 = 0 ✓"},
+{q:"Pour x² - 5x + 6 = 0, le discriminant Δ vaut :",options:["1","49","−24","-1"],answer:0,explication:"Δ = b² - 4ac = (-5)² - 4(1)(6) = 25 - 24 = 1. Δ > 0 donc 2 solutions : x = (5±1)/2, soit x = 3 et x = 2."},
+{q:"Si Δ < 0, l'équation du 2nd degré a :",options:["2 solutions","1 solution double","Pas de solution réelle","Une infinité de solutions"],answer:2,explication:"Si le discriminant Δ est strictement négatif, l'équation ax² + bx + c = 0 n'a pas de solution dans l'ensemble des réels (pas de racine carrée d'un nombre négatif)."},
+{q:"Résoudre 2x + 3 > 7",options:["x > 2","x < 2","x > 5","x > -2"],answer:0,explication:"2x + 3 > 7 → 2x > 4 → x > 2. On divise par 2 (positif) : le sens de l'inégalité ne change pas."},
+{q:"Dans le système : x + y = 5 et x - y = 1. Quelle est la solution ?",options:["x=2, y=3","x=3, y=2","x=4, y=1","x=1, y=4"],answer:1,explication:"Par addition : (x+y) + (x-y) = 5+1 → 2x = 6 → x = 3. Puis y = 5 - 3 = 2. Vérification : 3+2=5 ✓ et 3-2=1 ✓"},
+{q:"Si on divise les deux membres d'une inéquation par -2 :",options:["Le sens reste le même","Le sens s'inverse","On ajoute 2 des deux côtés","L'inéquation devient une équation"],answer:1,explication:"Quand on multiplie ou divise une inéquation par un nombre négatif, le sens de l'inégalité s'inverse. Ex : -2x > 4 → x < -2."}
+]},
+{id:"m3",title:"Géométrie : Pythagore et Thalès",
+dates:[{year:"Pythagore",desc:"AC² = AB² + BC² dans un triangle rectangle"},{year:"Thalès",desc:"Si (DE)//(BC) alors AD/AB = AE/AC = DE/BC"},{year:"Trigonométrie",desc:"sin = opposé/hypoténuse | cos = adjacent/hypoténuse | tan = opposé/adjacent"}],
+people:[{name:"Pythagore",role:"Mathématicien grec — théorème sur le triangle rectangle"},{name:"Thalès",role:"Mathématicien grec — proportionnalité des droites parallèles"}],
+causes:"La géométrie permet de calculer distances et angles sans mesurer directement. Fondamentale en architecture, physique, ingénierie.",
+deroulement:"PYTHAGORE : dans un triangle rectangle en B, AC² = AB² + BC² (hypoténuse²). Réciproque : si AC²=AB²+BC², alors angle B = 90°. THALÈS : si DE//BC avec D sur AB et E sur AC, alors AD/AB = AE/AC = DE/BC. TRIGONOMÉTRIE : sin(α) = côté opposé/hypoténuse, cos(α) = côté adjacent/hypoténuse, tan(α) = côté opposé/côté adjacent.",
+fin:"Identifier d'abord le type de problème (Pythagore, Thalès ou trigo). Dessiner un schéma. SOHCAHTOA : Sin=Opposé/Hypoténuse, Cos=Adjacent/Hypoténuse, Tan=Opposé/Adjacent.",
+notions:["Hypoténuse","Théorème de Pythagore","Réciproque de Pythagore","Théorème de Thalès","Sinus","Cosinus","Tangente"],
+quiz:[
+{q:"Dans un triangle rectangle en B, AB=3 et BC=4. Que vaut AC ?",options:["5","7","√7","25"],answer:0,explication:"AC² = AB² + BC² = 9 + 16 = 25. Donc AC = √25 = 5. C'est le fameux triangle 3-4-5 !"},
+{q:"Dans la réciproque de Pythagore, si AC² = AB² + BC², alors :",options:["Le triangle est isocèle","L'angle en A est droit","L'angle en B est droit","Le triangle est équilatéral"],answer:2,explication:"La réciproque : si dans un triangle AC² = AB² + BC², alors l'angle en B (formé par AB et BC) est droit. C'est l'angle opposé au plus grand côté."},
+{q:"Dans un triangle avec DE//BC, on a AD=2, AB=6, AE=3. Que vaut AC ?",options:["1","6","9","18"],answer:2,explication:"Thalès : AD/AB = AE/AC → 2/6 = 3/AC → AC = 3×6/2 = 9."},
+{q:"Dans un triangle rectangle, sin(α) vaut :",options:["Côté adjacent/hypoténuse","Hypoténuse/côté opposé","Côté opposé/hypoténuse","Côté opposé/côté adjacent"],answer:2,explication:"SOHCAHTOA : Sin = Opposé/Hypoténuse. Pour l'angle α, le côté opposé est en face de l'angle, l'hypoténuse est le plus grand côté (en face du droit)."},
+{q:"La tangente d'un angle vaut :",options:["sin/cos","cos/sin","1/sin","1/cos"],answer:0,explication:"tan(α) = sin(α)/cos(α) = côté opposé/côté adjacent. Pratique : tan donne l'angle si on connaît les deux côtés de l'angle droit."},
+{q:"Si cos(α) = 0,6 et l'hypoténuse = 10 cm, quel est le côté adjacent ?",options:["16,7 cm","0,06 cm","6 cm","60 cm"],answer:2,explication:"cos(α) = adjacent/hypoténuse → 0,6 = adjacent/10 → adjacent = 0,6 × 10 = 6 cm."}
+]},
+{id:"m4",title:"Statistiques et probabilités",
+dates:[{year:"Moyenne",desc:"Somme des valeurs ÷ nombre de valeurs"},{year:"Médiane",desc:"Valeur centrale (50% en dessous, 50% au dessus)"},{year:"Probabilité",desc:"P(A) = cas favorables / cas totaux (entre 0 et 1)"}],
+people:[{name:"Étendue",role:"Valeur max - valeur min"},{name:"Quartile Q1",role:"25% des données en dessous"},{name:"Quartile Q3",role:"75% des données en dessous"}],
+causes:"Les statistiques permettent d'analyser des données. Les probabilités permettent de prévoir des résultats aléatoires.",
+deroulement:"STATISTIQUES : moyenne pondérée, médiane (trier puis trouver le milieu), étendue, quartiles. REPRÉSENTATIONS : histogramme, boîte à moustaches, diagramme en bâtons. PROBABILITÉS : P(A) entre 0 et 1. Événements incompatibles : P(A ou B) = P(A) + P(B). Événement complémentaire : P(Ā) = 1 - P(A).",
+fin:"Toujours trier les données avant de chercher la médiane. La probabilité est toujours entre 0 et 1. Vérifier que la somme des probabilités = 1.",
+notions:["Moyenne","Médiane","Étendue","Quartile","Probabilité","Événement","Fréquence"],
+quiz:[
+{q:"La moyenne de 4, 8, 6, 10, 2 est :",options:["6","8","5","7"],answer:0,explication:"Moyenne = (4+8+6+10+2)/5 = 30/5 = 6."},
+{q:"La médiane de 3, 7, 1, 9, 5 est :",options:["5","7","4","6"],answer:0,explication:"Il faut trier : 1, 3, 5, 7, 9. La médiane est la valeur centrale = 5 (la 3e valeur sur 5)."},
+{q:"On lance un dé à 6 faces. Quelle est la probabilité d'obtenir un nombre pair ?",options:["1/6","1/2","1/3","2/3"],answer:1,explication:"Nombres pairs : 2, 4, 6 → 3 cas favorables sur 6 cas totaux. P(pair) = 3/6 = 1/2."},
+{q:"P(Ā) = 1 - P(A) correspond à :",options:["La probabilité de A","La probabilité de l'événement contraire à A","La probabilité nulle","La probabilité certaine"],answer:1,explication:"P(Ā) est la probabilité de l'événement complémentaire (contraire) de A. Si P(pluie) = 0,3, alors P(pas de pluie) = 1 - 0,3 = 0,7."},
+{q:"L'étendue d'une série est :",options:["La valeur la plus grande","La valeur la plus petite","La différence entre la valeur max et la valeur min","La somme de toutes les valeurs"],answer:2,explication:"L'étendue = valeur maximale - valeur minimale. Elle mesure la dispersion des données."},
+{q:"Dans un sac, il y a 3 billes rouges et 7 bleues. On tire une bille au hasard. P(rouge) = ?",options:["3/10","7/10","3/7","1/3"],answer:0,explication:"P(rouge) = cas favorables/cas totaux = 3/(3+7) = 3/10 = 0,3. Il y a 10 billes au total."}
+]},
+{id:"m5",title:"Fonctions et représentations graphiques",
+dates:[{year:"Fonction affine",desc:"f(x) = ax + b | a = pente, b = ordonnée à l'origine"},{year:"Fonction linéaire",desc:"f(x) = ax (passe par l'origine, b=0)"},{year:"Lecture graphique",desc:"Antécédent (x) → Image (y)"}],
+people:[{name:"Coefficient directeur a",role:"Pente de la droite (+: monte, -: descend)"},{name:"Ordonnée à l'origine b",role:"Point où la droite coupe l'axe y (x=0)"},{name:"Antécédent",role:"La valeur de x dont on cherche l'image"}],
+causes:"Les fonctions permettent de modéliser des situations réelles : prix en fonction de la quantité, distance en fonction du temps, etc.",
+deroulement:"FONCTION AFFINE f(x) = ax + b : représentation = droite. a > 0 : droite croissante. a < 0 : décroissante. b = valeur en x=0. TABLEAU DE VALEURS : choisir des valeurs de x, calculer f(x). LECTURE GRAPHIQUE : image = valeur en y pour un x donné. Antécédent = valeur en x pour un y donné (lire à l'envers).",
+fin:"Pour tracer une droite : calculer deux points (dont x=0 pour l'ordonnée à l'origine). Pour trouver a : a = (y2-y1)/(x2-x1). Un coefficient directeur positif = droite croissante.",
+notions:["Fonction","Image","Antécédent","Coefficient directeur","Ordonnée à l'origine","Fonction affine","Représentation graphique"],
+quiz:[
+{q:"Pour f(x) = 3x - 2, quelle est l'image de x = 4 ?",options:["10","14","6","12"],answer:0,explication:"f(4) = 3(4) - 2 = 12 - 2 = 10. 'L'image de 4 par f est 10', ce qui signifie que le point (4 ; 10) est sur la courbe."},
+{q:"Dans f(x) = -2x + 5, la droite est :",options:["Croissante","Décroissante","Horizontale","Verticale"],answer:1,explication:"Le coefficient directeur a = -2 est négatif. Une fonction affine avec a < 0 est décroissante (la droite descend de gauche à droite)."},
+{q:"Quelle est l'ordonnée à l'origine de f(x) = 4x - 7 ?",options:["4","0","7","-7"],answer:3,explication:"L'ordonnée à l'origine est b = -7. On la trouve en calculant f(0) = 4(0) - 7 = -7. C'est là où la droite coupe l'axe des y."},
+{q:"Une fonction linéaire a la forme :",options:["f(x) = ax + b","f(x) = ax (passe par l'origine)","f(x) = x + b","f(x) = a/x"],answer:1,explication:"Une fonction linéaire est de la forme f(x) = ax, avec b = 0. Sa représentation graphique est une droite passant par l'origine (0 ; 0)."},
+{q:"Si le point A(3 ; 7) est sur la courbe de f, alors :",options:["L'antécédent de 3 est 7","L'image de 3 est 7","L'image de 7 est 3","f(7) = 3"],answer:1,explication:"Si A(3 ; 7) est sur la courbe, cela signifie f(3) = 7. L'image de 3 par f est 7. 3 est l'antécédent de 7 par f."},
+{q:"Pour calculer le coefficient directeur a d'une droite passant par A(1,3) et B(3,9) :",options:["a = 1","a = 3","a = 12","a = 6"],answer:1,explication:"a = (y₂-y₁)/(x₂-x₁) = (9-3)/(3-1) = 6/2 = 3. La droite monte de 3 unités pour chaque unité avancée en x."}
+]}
+]}
+};
+
+let currentMatiere = null;
+let currentChapter = null;
+let currentQuizData = null;
+let quizState = {};
+let progress = {};
+
+function loadProgress() {
+  try {
+    const s = localStorage.getItem('brevet2026_progress');
+    if (s) progress = JSON.parse(s);
+  } catch(e) { progress = {}; }
+}
+function saveProgress() {
+  try { localStorage.setItem('brevet2026_progress', JSON.stringify(progress)); } catch(e) {}
+}
+function confirmReset() {
+  if (confirm('Réinitialiser toute la progression ?')) {
+    progress = {};
+    saveProgress();
+    renderDashboard();
+  }
+}
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  const nb = document.getElementById('nav-' + (id === 'quiz-select' ? 'quiz' : id));
+  if (nb) nb.classList.add('active');
+  if (id === 'dashboard') renderDashboard();
+  if (id === 'fiches') renderFicheNav();
+  if (id === 'quiz-select') renderQuizNav();
+}
+function totalQuestions() {
+  let t = 0;
+  Object.values(DATA).forEach(m => m.chapters.forEach(c => t += (c.quiz||[]).length));
+  return t;
+}
+function totalAnswered() {
+  let t = 0;
+  Object.values(progress).forEach(v => t += (v.answered||0));
+  return t;
+}
+function totalCorrect() {
+  let t = 0;
+  Object.values(progress).forEach(v => t += (v.correct||0));
+  return t;
+}
+function chaptersCompleted() {
+  let t = 0;
+  Object.values(DATA).forEach(m => m.chapters.forEach(c => {
+    const p = progress[c.id];
+    if (p && p.answered > 0 && p.answered >= (c.quiz||[]).length) t++;
+  }));
+  return t;
+}
+function renderDashboard() {
+  const ta = totalAnswered(), tc = totalCorrect(), tq = totalQuestions();
+  const pct = ta > 0 ? Math.round(tc/ta*100) : 0;
+  document.getElementById('dash-stats').innerHTML = `
+    <div class="stat-card"><div class="stat-label">Questions répondues</div><div class="stat-value">${ta}</div><div class="stat-sub">sur ${tq} au total</div></div>
+    <div class="stat-card"><div class="stat-label">Bonnes réponses</div><div class="stat-value">${tc}</div><div class="stat-sub">${pct}% de réussite</div></div>
+    <div class="stat-card"><div class="stat-label">Chapitres tentés</div><div class="stat-value">${chaptersCompleted()}</div><div class="stat-sub">complétés</div></div>
+  `;
+  let html = '';
+  Object.entries(DATA).forEach(([mid, m]) => {
+    html += `<div class="matiere-group-label">${m.label}</div>`;
+    m.chapters.forEach(c => {
+      const p = progress[c.id] || {};
+      const ans = p.answered || 0;
+      const cor = p.correct || 0;
+      const tot = (c.quiz||[]).length;
+      const pct2 = tot > 0 ? Math.round(ans/tot*100) : 0;
+      const label = ans > 0 ? `${cor}/${ans} (${Math.round(cor/ans*100)}%)` : 'Non commencé';
+      html += `<div class="ch-progress"><div class="ch-progress-name">${c.title}</div><div class="ch-progress-bar"><div class="ch-progress-fill" style="width:${pct2}%"></div></div><div class="ch-progress-score">${label}</div></div>`;
+    });
+  });
+  document.getElementById('dash-progress').innerHTML = html;
+}
+function renderFicheNav() {
+  if (!currentMatiere) currentMatiere = Object.keys(DATA)[0];
+  const tabs = document.getElementById('matiere-tabs');
+  tabs.innerHTML = Object.entries(DATA).map(([mid, m]) =>
+    `<button class="matiere-tab ${mid===currentMatiere?'active':''}" onclick="selectMatiere('${mid}')">${m.label}</button>`
+  ).join('');
+  renderChapterList();
+}
+function selectMatiere(mid) {
+  currentMatiere = mid;
+  currentChapter = null;
+  renderFicheNav();
+  document.getElementById('fiche-display').innerHTML = '';
+}
+function renderChapterList() {
+  const m = DATA[currentMatiere];
+  document.getElementById('chapter-list').innerHTML = m.chapters.map(c =>
+    `<button class="ch-btn ${c.id===currentChapter?'active':''}" onclick="showFiche('${c.id}')">${c.title}</button>`
+  ).join('');
+  if (currentChapter) {
+    const c = m.chapters.find(x => x.id === currentChapter);
+    if (c) renderFiche(c);
+  }
+}
+function showFiche(cid) {
+  currentChapter = cid;
+  for (const [mid, m] of Object.entries(DATA)) {
+    const c = m.chapters.find(x => x.id === cid);
+    if (c) { currentMatiere = mid; renderFicheNav(); renderFiche(c); return; }
+  }
+}
+function renderFiche(c) {
+  const datesHtml = (c.dates||[]).map(d => `<div class="date-card"><div class="date-year">${d.year}</div><div class="date-desc">${d.desc}</div></div>`).join('');
+  const peopleHtml = (c.people||[]).map(p => `<div class="person-card"><div class="person-name">${p.name}</div><div class="person-role">${p.role||''}</div></div>`).join('');
+  const notionsHtml = (c.notions||[]).map(n => `<span class="notion">${n}</span>`).join('');
+  document.getElementById('fiche-display').innerHTML = `
+    <div class="fiche-card">
+      <div class="fiche-title">${c.title}</div>
+      <div class="fiche-hint">📖 Lis, puis cache et récite !</div>
+      ${c.dates&&c.dates.length ? `<div class="section-label">📅 Dates / Étapes clés</div><div class="dates-grid">${datesHtml}</div>` : ''}
+      ${c.people&&c.people.length ? `<div class="section-label">👤 Personnages / Notions</div><div class="people-grid">${peopleHtml}</div>` : ''}
+      ${c.causes ? `<div class="section-label">📌 Contexte / Causes</div><div class="summary-block"><div class="summary-text">${c.causes}</div></div>` : ''}
+      ${c.deroulement ? `<div class="section-label">⚙️ Déroulement / Contenu</div><div class="summary-block"><div class="summary-text">${c.deroulement}</div></div>` : ''}
+      ${c.fin ? `<div class="section-label">✅ À retenir / Fin</div><div class="summary-block"><div class="summary-text">${c.fin}</div></div>` : ''}
+      ${notionsHtml ? `<div class="section-label">🔑 Notions-clés</div><div class="notions">${notionsHtml}</div>` : ''}
+      ${(c.quiz||[]).length > 0 ? `<button class="btn-quiz" onclick="startQuizFromFiche('${c.id}')">🎯 Faire le quiz de ce chapitre</button>` : ''}
+    </div>`;
+}
+function renderQuizNav() {
+  if (!currentMatiere) currentMatiere = Object.keys(DATA)[0];
+  const tabs = document.getElementById('quiz-matiere-tabs');
+  tabs.innerHTML = Object.entries(DATA).map(([mid, m]) =>
+    `<button class="matiere-tab ${mid===currentMatiere?'active':''}" onclick="selectQMatiere('${mid}')">${m.label}</button>`
+  ).join('');
+  const m = DATA[currentMatiere];
+  document.getElementById('quiz-chapter-list').innerHTML = m.chapters.filter(c=>(c.quiz||[]).length>0).map(c =>
+    `<button class="ch-btn" onclick="startQuiz('${c.id}')">${c.title}</button>`
+  ).join('');
+}
+function selectQMatiere(mid) {
+  currentMatiere = mid;
+  document.getElementById('quiz-area').innerHTML = '';
+  renderQuizNav();
+}
+function startQuizFromFiche(cid) {
+  showPage('quiz-select');
+  setTimeout(() => startQuiz(cid), 50);
+}
+function startQuiz(cid) {
+  let chapter = null;
+  for (const m of Object.values(DATA)) {
+    chapter = m.chapters.find(c => c.id === cid);
+    if (chapter) break;
+  }
+  if (!chapter || !(chapter.quiz||[]).length) return;
+  currentQuizData = { chapter, questions: shuffle([...chapter.quiz]), current: 0, correct: 0, answers: [] };
+  renderQuestion();
+}
+function shuffle(arr) {
+  for (let i = arr.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  return arr;
+}
+function renderQuestion() {
+  const d = currentQuizData;
+  const q = d.questions[d.current];
+  const total = d.questions.length;
+  const shuffledOpts = q.options.map((o,i)=>({text:o,orig:i}));
+  shuffle(shuffledOpts);
+  const correctNewIdx = shuffledOpts.findIndex(o=>o.orig===q.answer);
+  const pct = Math.round(d.current/total*100);
+  document.getElementById('quiz-area').innerHTML = `
+    <div class="quiz-header">
+      <h2>${d.chapter.title}</h2>
+      <div class="quiz-meta">Question ${d.current+1} / ${total}</div>
+    </div>
+    <div class="quiz-body">
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+      <div class="question-text">${q.q}</div>
+      <div class="options">
+        ${shuffledOpts.map((o,i)=>`<button class="option" id="opt${i}" onclick="selectAnswer(${i},${correctNewIdx},'${escQ(q.explication)}')">${o.text}</button>`).join('')}
+      </div>
+      <div class="feedback" id="feedback"></div>
+      <button class="btn-next" id="btn-next" onclick="nextQuestion()">${d.current+1<total?'Question suivante →':'Voir les résultats'}</button>
+    </div>`;
+}
+function escQ(s){ return s.replace(/'/g,"&#39;").replace(/"/g,'&quot;'); }
+function selectAnswer(chosen, correct, expl) {
+  document.querySelectorAll('.option').forEach(b => { b.classList.add('disabled'); b.onclick=null; });
+  const isCorrect = chosen === correct;
+  document.getElementById('opt'+correct).classList.add('correct');
+  if (!isCorrect) document.getElementById('opt'+chosen).classList.add('wrong');
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback show ' + (isCorrect?'correct':'wrong');
+  fb.innerHTML = (isCorrect?'✅ Bonne réponse ! ':'❌ Mauvaise réponse. ') + expl;
+  document.getElementById('btn-next').classList.add('show');
+  if (isCorrect) currentQuizData.correct++;
+  currentQuizData.answers.push({ok:isCorrect, q:currentQuizData.questions[currentQuizData.current].q});
+}
+function nextQuestion() {
+  currentQuizData.current++;
+  if (currentQuizData.current >= currentQuizData.questions.length) showResult();
+  else renderQuestion();
+}
+function showResult() {
+  const d = currentQuizData;
+  const c = d.correct, t = d.questions.length;
+  const pct = Math.round(c/t*100);
+  const cid = d.chapter.id;
+  if (!progress[cid]) progress[cid] = {answered:0,correct:0};
+  progress[cid].answered = (progress[cid].answered||0) + t;
+  progress[cid].correct = (progress[cid].correct||0) + c;
+  saveProgress();
+  let msg, emoji;
+  if (pct >= 80) { msg="Excellent ! Tu maîtrises bien ce chapitre !"; emoji="🏆"; }
+  else if (pct >= 60) { msg="Bien joué ! Relis les points ratés."; emoji="👍"; }
+  else { msg="Courage ! Relis la fiche et recommence."; emoji="📖"; }
+  const reviewHtml = d.answers.map((a,i) =>
+    `<div class="answer-item ${a.ok?'ok':'ko'}"><div class="answer-q">${a.ok?'✅':'❌'} Q${i+1} : ${a.q}</div></div>`
+  ).join('');
+  document.getElementById('quiz-area').innerHTML = `
+    <div class="result-card">
+      <div class="result-score">${emoji} ${c}/${t}</div>
+      <div class="result-label">${pct}% de réussite</div>
+      <div class="result-msg">${msg}</div>
+      <div class="result-actions">
+        <button class="btn-primary" onclick="startQuiz('${cid}')">🔄 Refaire</button>
+        <button class="btn-secondary" onclick="showFicheFromResult('${cid}')">📖 Revoir la fiche</button>
+      </div>
+      <div class="answers-review">${reviewHtml}</div>
+    </div>`;
+}
+function showFicheFromResult(cid) {
+  showPage('fiches');
+  showFiche(cid);
+}
+loadProgress();
+showPage('dashboard');
+</script></body></html>
