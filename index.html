@@ -720,24 +720,24 @@ function renderQuestion() {
       <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
       <div class="question-text">${q.q}</div>
       <div class="options">
-        ${shuffledOpts.map((o,i)=>`<button class="option" id="opt${i}" onclick="selectAnswer(${i},${correctNewIdx},'${escQ(q.explication)}')">${o.text}</button>`).join('')}
+        ${shuffledOpts.map((o,i)=>`<button class="option" id="opt${i}" onclick="selectAnswer(${i},${correctNewIdx},${d.current})">${o.text}</button>`).join('')}
       </div>
       <div class="feedback" id="feedback"></div>
       <button class="btn-next" id="btn-next" onclick="nextQuestion()">${d.current+1<total?'Question suivante →':'Voir les résultats'}</button>
     </div>`;
 }
-function escQ(s){ return s.replace(/'/g,"&#39;").replace(/"/g,'&quot;'); }
-function selectAnswer(chosen, correct, expl) {
+function selectAnswer(chosen, correct, qIdx) {
   document.querySelectorAll('.option').forEach(b => { b.classList.add('disabled'); b.onclick=null; });
   const isCorrect = chosen === correct;
   document.getElementById('opt'+correct).classList.add('correct');
   if (!isCorrect) document.getElementById('opt'+chosen).classList.add('wrong');
+  const expl = currentQuizData.questions[qIdx].explication;
   const fb = document.getElementById('feedback');
   fb.className = 'feedback show ' + (isCorrect?'correct':'wrong');
   fb.innerHTML = (isCorrect?'✅ Bonne réponse ! ':'❌ Mauvaise réponse. ') + expl;
   document.getElementById('btn-next').classList.add('show');
   if (isCorrect) currentQuizData.correct++;
-  currentQuizData.answers.push({ok:isCorrect, q:currentQuizData.questions[currentQuizData.current].q});
+  currentQuizData.answers.push({ok:isCorrect, q:currentQuizData.questions[qIdx].q});
 }
 function nextQuestion() {
   currentQuizData.current++;
