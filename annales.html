@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Annales Brevet Français</title>
+<style>
+:root{--g:#085041;--gm:#1D9E75;--gl:#E1F5EE;--text:#1a1a1a;--muted:#6b7280;--bg:#f3f4f6;--card:#fff;--border:#e5e7eb;--r:12px;--rs:8px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+nav{background:var(--g);color:#fff;padding:0 1rem;display:flex;align-items:center;gap:.5rem;height:52px;position:sticky;top:0;z-index:100;}
+.logo{font-weight:700;font-size:15px;color:#9FE1CB;}
+.nav-links{display:flex;gap:4px;margin-left:auto;}
+nav button{background:transparent;border:none;color:rgba(255,255,255,.7);padding:5px 10px;border-radius:20px;cursor:pointer;font-size:12px;}
+nav button.active,nav button:hover{background:rgba(255,255,255,.18);color:#fff;}
+.page{display:none;padding:1rem;max-width:900px;margin:0 auto;}
+.page.active{display:block;}
+h2.ptitle{font-size:18px;font-weight:700;color:var(--g);margin-bottom:1rem;}
+/* SUJET CARD */
+.sujet-banner{background:var(--g);color:#fff;border-radius:var(--r);padding:1.1rem 1.25rem;margin-bottom:1rem;}
+.sujet-banner h1{font-size:16px;font-weight:600;margin-bottom:3px;}
+.sujet-banner p{font-size:12px;color:#9FE1CB;}
+.warning{background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:9px 12px;border-radius:var(--rs);font-size:12px;margin-bottom:1rem;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem 1.25rem;margin-bottom:.85rem;}
+.card h3{font-size:14px;font-weight:600;color:var(--g);margin-bottom:.65rem;border-bottom:1px solid var(--gl);padding-bottom:.5rem;}
+.text-litteraire{font-size:13px;line-height:1.9;color:var(--text);}
+.text-litteraire .note{font-size:11px;color:var(--muted);font-style:italic;}
+.line-num{color:var(--muted);font-size:11px;min-width:26px;display:inline-block;user-select:none;}
+.text-body{border-left:3px solid var(--gm);padding-left:12px;}
+/* QUESTIONS */
+.question-block{margin-bottom:1.1rem;}
+.q-header{display:flex;align-items:flex-start;gap:8px;margin-bottom:.5rem;}
+.q-num{background:var(--g);color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;}
+.q-pts{background:var(--gl);color:var(--g);font-size:11px;font-weight:600;padding:2px 7px;border-radius:20px;flex-shrink:0;margin-top:3px;}
+.q-text{font-size:13px;line-height:1.6;color:var(--text);}
+.q-text strong{color:var(--g);}
+.correction{background:var(--gl);border:1px solid var(--gm);border-radius:var(--rs);padding:9px 12px;margin-top:.5rem;font-size:12px;line-height:1.65;color:#085041;display:none;}
+.correction.show{display:block;}
+.correction strong{font-weight:600;}
+.correction blockquote{border-left:2px solid var(--gm);padding-left:8px;margin:4px 0;font-style:italic;}
+.btn-show{background:transparent;border:1px solid var(--gm);color:var(--g);padding:4px 10px;border-radius:var(--rs);font-size:11px;font-weight:600;cursor:pointer;margin-top:.4rem;}
+.btn-show:hover{background:var(--gl);}
+/* REDACTION */
+.redaction-intro{font-size:13px;line-height:1.65;color:var(--text);margin-bottom:.75rem;}
+.redaction-intro strong{color:var(--g);}
+.sujet-choice{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:1rem;}
+.sujet-btn{padding:.75rem 1rem;border:1.5px solid var(--border);border-radius:var(--rs);background:var(--card);cursor:pointer;text-align:left;font-size:12px;line-height:1.5;color:var(--muted);transition:all .15s;}
+.sujet-btn.selected{border-color:var(--gm);background:var(--gl);color:var(--g);}
+.sujet-btn strong{display:block;font-size:13px;font-weight:600;margin-bottom:3px;color:var(--text);}
+.sujet-btn.selected strong{color:var(--g);}
+.writing-area{width:100%;min-height:280px;border:1.5px solid var(--border);border-radius:var(--rs);padding:.75rem;font-family:inherit;font-size:13px;line-height:1.9;color:var(--text);background:white;resize:vertical;}
+.writing-area:focus{outline:none;border-color:var(--gm);}
+.line-count{font-size:11px;color:var(--muted);margin-top:4px;text-align:right;}
+.btn-check{margin-top:.75rem;width:100%;padding:11px;background:var(--g);color:#fff;border:none;border-radius:var(--rs);font-size:14px;font-weight:600;cursor:pointer;}
+.btn-check:hover{background:var(--gm);}
+.feedback-redac{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem 1.25rem;margin-top:.85rem;display:none;}
+.feedback-redac.show{display:block;}
+.feedback-redac h4{font-size:14px;font-weight:600;color:var(--g);margin-bottom:.75rem;}
+.critere-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.critere-row:last-child{border:none;}
+.critere-name{color:var(--text);flex:1;}
+.critere-score{display:flex;gap:4px;}
+.star{width:14px;height:14px;border-radius:50%;background:var(--border);}
+.star.on{background:var(--gm);}
+.conseil-block{background:var(--gl);border-left:3px solid var(--gm);padding:8px 12px;border-radius:0 var(--rs) var(--rs) 0;margin-top:.75rem;font-size:12px;color:var(--g);line-height:1.65;}
+.model-answer{background:#f0fdf4;border:1px solid #86efac;border-radius:var(--rs);padding:.75rem 1rem;margin-top:.75rem;font-size:12px;line-height:1.7;color:#166534;}
+.model-answer strong{display:block;font-size:12px;font-weight:600;margin-bottom:4px;color:#14532d;}
+.tabs-annee{display:flex;gap:6px;margin-bottom:1rem;flex-wrap:wrap;}
+.tab-annee{padding:5px 14px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:12px;cursor:pointer;}
+.tab-annee.active{background:var(--g);color:#9FE1CB;border-color:var(--g);font-weight:600;}
+.section-sep{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:1rem 0 .5rem;display:flex;align-items:center;gap:8px;}
+.section-sep::before{content:"";flex:1;height:1px;background:var(--border);}
+.section-sep::after{content:"";flex:1;height:1px;background:var(--border);}
+@media(max-width:600px){.sujet-choice{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<nav>
+  <span class="logo">📚 Brevet 2026 — Annales</span>
+  <div class="nav-links">
+    <button onclick="showP('texte')" id="nav-texte" class="active">Texte 2024</button>
+    <button onclick="showP('questions')" id="nav-questions">Questions</button>
+    <button onclick="showP('grammaire')" id="nav-grammaire">Grammaire</button>
+    <button onclick="showP('redaction')" id="nav-redaction">Rédaction</button>
+  </div>
+</nav>
+
+<!-- PAGE TEXTE -->
+<div class="page active" id="page-texte">
+  <div class="sujet-banner">
+    <h1>🇫🇷 Diplôme National du Brevet — Session 2024</h1>
+    <p>Épreuve officielle de français · Série générale · Texte littéraire + Image</p>
+  </div>
+  <div class="warning">⏱ Méthode : lire le texte <strong>2 fois</strong> avant de regarder les questions. Surligner les mots difficiles. Lire les notes de bas de page.</div>
+
+  <div class="card">
+    <h3>📖 Texte littéraire — Marc Dugain, <em>La chambre des officiers</em> (1999)</h3>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:.75rem;line-height:1.6;">
+      <strong>Contexte :</strong> Adrien Fournier, le narrateur, et ses deux amis, Penanster et Weil, sont trois officiers gravement blessés au visage durant la Première Guerre mondiale. Ils sont soignés à l'hôpital du Val-de-Grâce. Un jour, ils y aperçoivent Marguerite, elle aussi victime d'une terrible blessure. Ils attendent depuis longtemps une occasion de lui parler.
+    </div>
+    <div class="text-body text-litteraire">
+      <p><span class="line-num">1</span>Nos blessures ne pouvaient qu'effrayer cette femme qui se réfléchissait<sup>1</sup> en nous,</p>
+      <p><span class="line-num"></span>miroirs de son infortune, mais lorsque, après des jours d'attente et de guet, elle sortit et</p>
+      <p><span class="line-num"></span>se trouva devant Penanster, elle ne se déroba<sup>2</sup> point.</p>
+      <p style="margin-top:.5rem"><span class="line-num">4</span>– Nous formons, lui expliqua-t-il, un club d'officiers qui compte à ce jour trois</p>
+      <p><span class="line-num">5</span>membres actifs et volontiers bienfaiteurs. Nous nous sommes aperçus qu'il y manquait</p>
+      <p><span class="line-num"></span>une femme. Voulez-vous en faire partie ?</p>
+      <p style="margin-top:.5rem"><span class="line-num">7</span>Pour toute réponse, elle nous adressa un sourire chaleureux, le sourire immaculé<sup>3</sup></p>
+      <p><span class="line-num"></span>d'une bouche totalement épargnée, comme ses yeux et son front. <strong style="color:var(--g)">Elle était comme un</strong></p>
+      <p><span class="line-num">9</span><strong style="color:var(--g)">parterre de roses saccagé par le milieu.</strong> Elle avait été touchée au nez et aux pommettes</p>
+      <p><span class="line-num">10</span>et la déflagration lui avait également crevé les tympans car, comme Penanster poursuivait</p>
+      <p><span class="line-num"></span>la conversation, elle continua de sourire, du sourire de ceux qui vivent dans un monde à</p>
+      <p><span class="line-num"></span>part.</p>
+      <p style="margin-top:.5rem"><span class="line-num">13</span>Penanster comprit alors qu'elle était sourde et ne pouvait que lire sur les lèvres.</p>
+      <p><span class="line-num"></span>Lui seul avait une bouche intacte, où les mots prenaient forme. <strong style="color:var(--g)">Je compris aussitôt que</strong></p>
+      <p><span class="line-num">15</span><strong style="color:var(--g)">ni Weil ni moi ne pourrions jamais nous entretenir avec elle,</strong> les mouvements de nos</p>
+      <p><span class="line-num"></span>lèvres étaient devenus sans signification car le son des mots reconstitués tels que nous</p>
+      <p><span class="line-num"></span>les formions ne parviendrait jamais à son oreille.</p>
+      <p style="margin-top:.5rem"><span class="line-num">18</span>Dans le langage qui commençait à s'instituer entre elle et Penanster, notre ami</p>
+      <p><span class="line-num"></span>s'étonna de sa présence parmi nous. D'une voix à la douceur tiède qui faisait paraître</p>
+      <p><span class="line-num">20</span>encore plus injuste sa blessure, elle nous conta alors son histoire. Ébahis, appuyés les</p>
+      <p><span class="line-num"></span>uns sur les autres, nous l'écoutions, intimidés par cette grande femme au charisme</p>
+      <p><span class="line-num"></span>inaltéré.</p>
+      <p style="margin-top:.5rem"><span class="line-num">23</span>Vers la fin de 1915, on manquait d'infirmières. Marguerite s'était portée volontaire.</p>
+      <p><span class="line-num"></span>Elle était à cette époque aussi belle qu'inutile. Son père était un orfèvre fortuné, et elle</p>
+      <p><span class="line-num">25</span>ne manquait pas de prétendants, tous réformés ou embusqués<sup>4</sup>. Elle rêvait de s'éprendre</p>
+      <p><span class="line-num"></span>d'un homme courageux. Elle fut affectée<sup>5</sup> d'abord dans un hôpital de l'arrière, où sa</p>
+      <p><span class="line-num"></span>beauté créa un tel trouble chez les convalescents<sup>6</sup> aussi bien que chez les médecins que</p>
+      <p><span class="line-num"></span>la situation devint insupportable. Sans imaginer probablement ce que serait la réalité, elle</p>
+      <p><span class="line-num"></span>persuada un officier auquel elle s'était refusée de l'envoyer dans une antenne de secours</p>
+      <p><span class="line-num">30</span>à l'avant<sup>7</sup>.</p>
+    </div>
+    <div style="margin-top:1rem;padding-top:.75rem;border-top:1px solid var(--border);">
+      <p class="note"><sup>1</sup> Se réfléchissait : se reflétait. <sup>2</sup> Elle ne se déroba point : elle ne partit pas. <sup>3</sup> Immaculé : sans défauts. <sup>4</sup> Embusqués : à un poste loin du front, moins dangereux. <sup>5</sup> Elle fut affectée : envoyée comme infirmière. <sup>6</sup> Convalescents : soldats en train de guérir. <sup>7</sup> À l'avant : zone de combat.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🖼 Image — Georges Conrad, <em>Les Gueules cassées</em></h3>
+    <div style="text-align:center;padding:.5rem 0;">
+      <div style="background:#f3f4f6;border:1px solid var(--border);border-radius:var(--rs);padding:2rem;display:inline-block;max-width:400px;">
+        <div style="font-size:13px;color:var(--muted);margin-bottom:.5rem;">Affiche de l'Union des blessés de la face · Lithographie</div>
+        <div style="width:220px;height:280px;background:linear-gradient(135deg,#d4c5a9 0%,#b8a890 40%,#8b7355 100%);margin:0 auto;border-radius:4px;display:flex;align-items:flex-end;padding:1rem;position:relative;overflow:hidden;">
+          <div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);width:80px;height:80px;background:#c9b99a;border-radius:50%;border:3px solid #a0916e;"></div>
+          <div style="position:absolute;top:25px;left:50%;transform:translateX(-30%);width:40px;height:20px;background:#e8d5b7;border-radius:50%;"></div>
+          <div style="position:absolute;top:90px;left:35%;width:90px;height:110px;background:#8b7355;border-radius:4px;"></div>
+          <div style="position:absolute;top:85px;left:28%;width:30px;height:60px;background:#c9b99a;border-radius:2px;"></div>
+          <div style="position:absolute;bottom:15px;width:100%;text-align:center;">
+            <div style="background:rgba(0,0,0,.6);color:#fff;font-size:9px;padding:3px 6px;border-radius:3px;display:inline-block;">LES GUEULES CASSÉES</div>
+          </div>
+        </div>
+        <p style="font-size:11px;color:var(--muted);margin-top:.5rem;">Reproduction schématique — Infirmière aidant un soldat blessé au visage</p>
+      </div>
+    </div>
+    <div style="font-size:12px;color:var(--muted);margin-top:.75rem;line-height:1.6;background:var(--bg);padding:.65rem;border-radius:var(--rs);">
+      💡 <strong>Pour analyser cette image :</strong> Qui est représenté ? Quel message veut-elle transmettre ? Fait-elle écho au texte ? Quelles similitudes/différences ?
+    </div>
+  </div>
+  <button class="btn-check" onclick="showP('questions')">Passer aux questions de compréhension →</button>
+</div>
+
+<!-- PAGE QUESTIONS -->
+<div class="page" id="page-questions">
+  <h2 class="ptitle">I. Compréhension et compétences d'interprétation (32 pts)</h2>
+  <div class="warning">📌 Rappel : toujours justifier avec une citation du texte entre guillemets. Une réponse sans citation n'est pas complète.</div>
+
+  <div class="card">
+    <div class="question-block">
+      <div class="q-header"><div class="q-num">1</div><div class="q-text">Qui sont les différents personnages de ce texte ?</div><div class="q-pts">2 pts</div></div>
+      <button class="btn-show" onclick="toggle('c1')">👁 Voir la correction</button>
+      <div class="correction" id="c1">
+        <strong>Réponse attendue :</strong> Les personnages sont <em>Adrien Fournier</em> (le narrateur), <em>Penanster</em>, <em>Weil</em> et <em>Marguerite</em>.<br><br>
+        <strong>Conseil :</strong> Nommer les 4 personnages = 2 pts. En oublier un = risquer de perdre un point. Relire le contexte introductif aide !
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-header"><div class="q-num">2</div><div class="q-text">Qu'ont-ils en commun ? <em>Deux éléments de réponse sont attendus.</em></div><div class="q-pts">2 pts</div></div>
+      <button class="btn-show" onclick="toggle('c2')">👁 Voir la correction</button>
+      <div class="correction" id="c2">
+        <strong>Réponse attendue :</strong><br>
+        • Ils ont tous été <strong>blessés durant la Première Guerre mondiale</strong>.<br>
+        • Ils sont tous <strong>soignés à l'hôpital du Val-de-Grâce</strong>.<br><br>
+        <strong>Conseil :</strong> Ces informations sont dans le chapeau introductif, pas dans le texte lui-même ! Il faut lire tout le sujet.
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-header"><div class="q-num">3</div><div class="q-text"><strong>Lignes 7 à 22 :</strong> Peut-on dire que tous les personnages communiquent facilement ensemble ? Justifiez en citant des passages précis du texte.</div><div class="q-pts">4 pts</div></div>
+      <button class="btn-show" onclick="toggle('c3')">👁 Voir la correction</button>
+      <div class="correction" id="c3">
+        <strong>Réponse attendue :</strong> NON, la communication n'est <em>pas</em> toujours facile.<br><br>
+        <blockquote>Entre Weil, le narrateur ET Marguerite : impossible. « Je compris aussitôt que ni Weil ni moi ne pourrions jamais nous entretenir avec elle »</blockquote>
+        <blockquote>Entre Penanster ET Marguerite : possible. « Lui seul avait une bouche intacte, où les mots prenaient forme » → elle lit sur les lèvres.</blockquote>
+        <strong>⚠ Piège :</strong> Il faut nuancer (pas juste "oui" ou "non") et citer les DEUX situations. 2 pts pour la nuance, 2 pts pour les citations.
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-header"><div class="q-num">4</div><div class="q-text"><strong>Lignes 23 à 30 :</strong> Pour quelles raisons Marguerite souhaitait-elle s'engager comme infirmière ? <em>Deux éléments justifiés par des citations.</em></div><div class="q-pts">5 pts</div></div>
+      <button class="btn-show" onclick="toggle('c4')">👁 Voir la correction</button>
+      <div class="correction" id="c4">
+        <strong>Raison 1 — Se rendre utile</strong> (se sentait inutile dans sa vie bourgeoise) :<br>
+        <blockquote>« elle était aussi belle qu'inutile »</blockquote>
+        <strong>Raison 2 — Rencontrer un homme courageux</strong> (pas un embusqué) :<br>
+        <blockquote>« Elle rêvait de s'éprendre d'un homme courageux » et « elle ne manquait pas de prétendants, tous réformés ou embusqués »</blockquote>
+        <strong>Barème :</strong> 2 pts par raison bien citée + 1 pt de présentation.
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-header"><div class="q-num">5a</div><div class="q-text">« Elle était comme un parterre de roses saccagé par le milieu. » — Quelle figure de style ? Pourquoi est-elle adaptée au personnage ?</div><div class="q-pts">3 pts</div></div>
+      <button class="btn-show" onclick="toggle('c5a')">👁 Voir la correction</button>
+      <div class="correction" id="c5a">
+        <strong>Figure :</strong> C'est une <strong>comparaison</strong> (outil : "comme").<br><br>
+        <strong>Pourquoi adaptée :</strong> Elle illustre le contraste entre la beauté intacte d'une partie du visage (yeux, bouche) et la partie abîmée (nez, pommettes). Comme un parterre de roses : beau dans l'ensemble, mais « saccagé par le milieu ».<br><br>
+        <blockquote>Citation justificative : « Elle avait été touchée au nez et aux pommettes »</blockquote>
+        <strong>⚠ Attention :</strong> Certains ont mis "métaphore" — c'est FAUX car il y a l'outil "comme". La comparaison utilise un outil (comme, tel, ainsi que...), la métaphore non.
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-header"><div class="q-num">5b</div><div class="q-text">Complétez le portrait physique par le portrait <em>moral</em> de Marguerite. Deux traits de caractère justifiés.</div><div class="q-pts">4 pts</div></div>
+      <button class="btn-show" onclick="toggle('c5b')">👁 Voir la correction</button>
+      <div class="correction" id="c5b">
+        <strong>Trait 1 — Chaleureuse / généreuse :</strong>
+        <blockquote>« elle nous adressa un sourire chaleureux »</blockquote>
+        <strong>Trait 2 — Charismatique / forte malgré l'épreuve :</strong>
+        <blockquote>« intimidés par cette grande femme au charisme inaltéré »</blockquote>
+        <strong>Trait bonus — Courageuse / déterminée :</strong>
+        <blockquote>« sans imaginer probablement ce que serait la réalité, elle persuada un officier [...] de l'envoyer dans une antenne de secours à l'avant »</blockquote>
+        <strong>Conseil :</strong> 2 pts par trait. Citer + nommer le trait (adj.). Ne pas répéter ce qui est déjà dans la question (portrait PHYSIQUE déjà fait → se concentrer sur le MORAL).
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-header"><div class="q-num">6</div><div class="q-text">Quelles réflexions sur la Grande Guerre ce texte inspire-t-il ? <em>Deux éléments justifiés par des citations.</em></div><div class="q-pts">6 pts</div></div>
+      <button class="btn-show" onclick="toggle('c6')">👁 Voir la correction</button>
+      <div class="correction" id="c6">
+        <strong>Réflexion 1 — L'horreur physique de la guerre :</strong> Les corps sont mutilés de façon irréversible.
+        <blockquote>« nos blessures ne pouvaient qu'effrayer » / « elle avait été touchée au nez et aux pommettes »</blockquote>
+        <strong>Réflexion 2 — L'injustice de la guerre :</strong> Des gens ordinaires (infirmières, officiers) sont sacrifiés sans comprendre.
+        <blockquote>« sans imaginer probablement ce que serait la réalité » / « faisait paraître encore plus injuste sa blessure »</blockquote>
+        <strong>Conseil :</strong> Ne pas se contenter de résumer — réfléchir à ce que le texte DIT sur la guerre en général.
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-header"><div class="q-num">7</div><div class="q-text">🖼 L'affiche <em>Les Gueules cassées</em> est-elle une bonne illustration du texte ? Deux arguments, chacun justifié par l'image ET le texte.</div><div class="q-pts">6 pts</div></div>
+      <button class="btn-show" onclick="toggle('c7')">👁 Voir la correction</button>
+      <div class="correction" id="c7">
+        <strong>OUI, c'est une bonne illustration. Voici 2 arguments :</strong><br><br>
+        <strong>Argument 1 :</strong> L'affiche montre une infirmière aidant un blessé de guerre au visage, ce qui correspond exactement au rôle de Marguerite et au contexte du Val-de-Grâce.<br>
+        <blockquote>Texte : « Marguerite s'était portée volontaire » comme infirmière.</blockquote>
+        <strong>Argument 2 :</strong> Le blessé a un bandage sur le visage, représentant les "gueules cassées" comme les personnages principaux.<br>
+        <blockquote>Texte : « nos blessures ne pouvaient qu'effrayer » / blessures au visage récurrentes dans le texte.</blockquote>
+        <strong>Structure attendue :</strong> Argument (idée générale) + preuve dans l'image + citation du texte = 3 pts par argument.
+      </div>
+    </div>
+  </div>
+  <button class="btn-check" onclick="showP('grammaire')">Passer à la grammaire →</button>
+</div>
+
+<!-- PAGE GRAMMAIRE -->
+<div class="page" id="page-grammaire">
+  <h2 class="ptitle">II. Grammaire et compétences linguistiques (18 pts)</h2>
+  <div class="warning">⚠ Ces questions sont précises et techniques. Utiliser le vocabulaire grammatical exact. Montrer sa méthode.</div>
+
+  <div class="card">
+    <div class="question-block">
+      <div class="q-header"><div class="q-num">8</div><div class="q-text">« Nous formons, lui expliqua-t-il, un <u>club</u> d'officiers qui compte à ce jour trois membres actifs et volontiers bienfaiteurs. » — Relevez les expansions du nom <em>club</em> et leur classe grammaticale.</div><div class="q-pts">2 pts</div></div>
+      <button class="btn-show" onclick="toggle('cg1')">👁 Voir la correction</button>
+      <div class="correction" id="cg1">
+        Les deux expansions du nom <em>club</em> sont :<br>
+        • <strong>« d'officiers »</strong> → groupe nominal prépositionnel (complément du nom)<br>
+        • <strong>« qui compte à ce jour trois membres actifs et volontiers bienfaiteurs »</strong> → proposition subordonnée relative<br><br>
+        <strong>Méthode :</strong> Les expansions du nom sont les éléments qui complètent ou précisent un nom : GN prépositionnels (de + nom), relatives (qui...), épithètes (adjectifs).
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-header"><div class="q-num">9</div><div class="q-text">« Je compris aussitôt que ni Weil ni moi ne pourrions jamais nous entretenir avec elle »<br>a) Mettre la proposition subordonnée entre crochets, entourer le subordonnant.<br>b) Quelle est sa fonction grammaticale ? Quelle manipulation avez-vous utilisée ?</div><div class="q-pts">3 pts</div></div>
+      <button class="btn-show" onclick="toggle('cg2')">👁 Voir la correction</button>
+      <div class="correction" id="cg2">
+        <strong>a)</strong> Je compris aussitôt <strong>que</strong> [ni Weil ni moi ne pourrions jamais nous entretenir avec elle]<br>
+        → Subordonnant : <strong>que</strong><br><br>
+        <strong>b)</strong> Fonction : <strong>COD</strong> (Complément d'Objet Direct) du verbe <em>compris</em>.<br>
+        Manipulation : poser la question « Je compris aussitôt <em>quoi ?</em> » → réponse = la subordonnée → donc COD.<br><br>
+        <strong>⚠ Piège fréquent :</strong> Ne pas confondre avec une subordonnée circonstancielle. Ici "que" introduit le COD, pas une circonstance.
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-header"><div class="q-num">10</div><div class="q-text">« la situation devint <u>insupportable</u> »<br>a) Identifiez les trois éléments qui composent ce mot.<br>b) Expliquez son sens et trouvez un synonyme.</div><div class="q-pts">3 pts</div></div>
+      <button class="btn-show" onclick="toggle('cg3')">👁 Voir la correction</button>
+      <div class="correction" id="cg3">
+        <strong>a) Formation du mot :</strong><br>
+        • <strong>IN-</strong> : préfixe privatif (= qui exprime la négation)<br>
+        • <strong>-SUPPORT-</strong> : radical (du verbe supporter)<br>
+        • <strong>-ABLE</strong> : suffixe (indique la possibilité)<br><br>
+        <strong>b) Sens :</strong> Que l'on ne peut pas supporter / accepter.<br>
+        <strong>Synonymes possibles :</strong> inacceptable, inadmissible, invivable.<br><br>
+        <strong>Méthode morphologie :</strong> Toujours identifier préfixe + radical + suffixe dans cet ordre.
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-header"><div class="q-num">11</div><div class="q-text">Réécrivez en remplaçant « Marguerite » par « Elles » (tous les accords).<br><em>« Marguerite s'était portée volontaire. Elle était à cette époque aussi belle qu'inutile. Son père était un orfèvre fortuné, et elle ne manquait pas de prétendants, tous réformés ou embusqués. Elle rêvait de s'éprendre d'un homme courageux. »</em></div><div class="q-pts">10 pts</div></div>
+      <button class="btn-show" onclick="toggle('cg4')">👁 Voir la correction</button>
+      <div class="correction" id="cg4">
+        <strong>Texte réécrit :</strong><br><br>
+        « Elles s'étaient portées<sup>*</sup> volontaires<sup>*</sup>. Elles étaient à cette époque aussi belles<sup>*</sup> qu'inutiles<sup>*</sup>. Leur<sup>*</sup> père était un orfèvre fortuné, et elles ne manquaient<sup>*</sup> pas de prétendants, tous réformés ou embusqués. Elles rêvaient<sup>*</sup> de s'éprendre d'un homme courageux. »<br><br>
+        <strong>Changements clés (marqués *) :</strong><br>
+        • s'était portée → s'étaient portées (participe avec être → accord sujet féminin pluriel)<br>
+        • volontaire → volontaires (attribut s'accorde)<br>
+        • aussi belle → aussi belles (attribut)<br>
+        • qu'inutile → qu'inutiles (attribut)<br>
+        • Son père → Leur père (possessif)<br>
+        • elle ne manquait → elles ne manquaient (accord sujet)<br>
+        • Elle rêvait → Elles rêvaient<br><br>
+        <strong>⚠ Attention : "un homme courageux" NE CHANGE PAS</strong> (ce n'est pas le sujet).
+      </div>
+    </div>
+  </div>
+  <button class="btn-check" onclick="showP('redaction')">Passer à la rédaction →</button>
+</div>
+
+<!-- PAGE REDACTION -->
+<div class="page" id="page-redaction">
+  <h2 class="ptitle">Rédaction (40 pts) — 1h30</h2>
+  <div class="warning">📌 Choisir UN seul sujet. Ne pas en faire deux. Lire les deux avant de choisir.</div>
+
+  <div class="card">
+    <h3>Choisir ton sujet</h3>
+    <div class="sujet-choice">
+      <button class="sujet-btn" id="btn-s1" onclick="chooseSujet(1)">
+        <strong>Sujet d'imagination</strong>
+        Imaginez la suite du récit de Marguerite (lignes 23-30), du point de vue de la jeune femme, à la 1ère personne, en terminant par l'accident qui a causé ses blessures. Mêler narration et description.<br><br>
+        <em style="color:#6b7280">Début imposé : « Me voilà désormais sur le front. Je ne ressentais pas la peur, je n'en avais pas le temps. »</em>
+      </button>
+      <button class="sujet-btn" id="btn-s2" onclick="chooseSujet(2)">
+        <strong>Sujet de réflexion</strong>
+        Adrien et ses amis écoutent Marguerite raconter son histoire. <strong>Que peuvent apporter les récits de vie, réels ou fictifs, à celles et ceux qui les découvrent ?</strong><br><br>
+        <em style="color:#6b7280">Développement argumenté + exemples (lectures, cinéma, peinture, BD...)</em>
+      </button>
+    </div>
+
+    <div id="zone-redac" style="display:none">
+      <div id="consigne-affichee" class="redaction-intro" style="margin-bottom:.75rem;padding:.75rem;background:var(--gl);border-radius:var(--rs);"></div>
+      <textarea class="writing-area" id="redac-text" placeholder="Écris ta rédaction ici..." oninput="countLines()"></textarea>
+      <div class="line-count" id="line-count">~0 lignes</div>
+      <button class="btn-check" onclick="showFeedback()">✅ Voir les conseils et le corrigé</button>
+    </div>
+  </div>
+
+  <div class="feedback-redac" id="feedback-redac">
+    <h4>📊 Grille d'évaluation et conseils</h4>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:.75rem;">Ces critères sont ceux des correcteurs du brevet. Compare honnêtement ta rédaction.</div>
+
+    <div id="criteres-s1" style="display:none">
+      <div class="critere-row"><span class="critere-name">✅ Respect de la consigne (1ère personne, suite cohérente, accident final)</span><span class="critere-score">6 pts</span></div>
+      <div class="critere-row"><span class="critere-name">📐 Structure narrative claire (début imposé → péripéties → accident)</span><span class="critere-score">8 pts</span></div>
+      <div class="critere-row"><span class="critere-name">✍️ Style et richesse de l'écriture (vocabulaire, figures de style)</span><span class="critere-score">10 pts</span></div>
+      <div class="critere-row"><span class="critere-name">📝 Orthographe et grammaire</span><span class="critere-score">10 pts</span></div>
+      <div class="critere-row"><span class="critere-name">📄 Longueur suffisante (30+ lignes) et présentation</span><span class="critere-score">6 pts</span></div>
+      <div class="conseil-block">
+        <strong>Ce qui fait la différence pour avoir 12+ :</strong><br>
+        → Maintenir le ton de Marguerite : elle est courageuse, déterminée, idéaliste. Pas naïve.<br>
+        → Décrire les sensations du front : bruits, odeurs, chaos — utiliser des champs lexicaux précis.<br>
+        → L'accident final doit être cohérent avec ce qu'on sait du texte (blessure au nez et aux pommettes, surdité).<br>
+        → Une figure de style volontaire = comparaison, métaphore ou hyperbole sur la guerre.
+      </div>
+      <div class="model-answer">
+        <strong>🌟 Exemple de début réussi (niveau 14/20) :</strong>
+        « Me voilà désormais sur le front. Je ne ressentais pas la peur, je n'en avais pas le temps. L'air sentait la boue et la poudre, une odeur que je n'aurais jamais pu imaginer dans mon salon doré de Paris. Les cris des blessés se mêlaient au grondement des obus comme une symphonie barbare. Je courais d'un brancard à l'autre, mes mains tachées de sang, et je pensais à toutes ces infirmières que j'avais enviées sans comprendre leur courage véritable... »
+      </div>
+    </div>
+
+    <div id="criteres-s2" style="display:none">
+      <div class="critere-row"><span class="critere-name">✅ Réponse à la question (apports des récits de vie)</span><span class="critere-score">6 pts</span></div>
+      <div class="critere-row"><span class="critere-name">📐 Structure argumentative (intro + 2-3 arguments + conclusion)</span><span class="critere-score">8 pts</span></div>
+      <div class="critere-row"><span class="critere-name">💡 Qualité des exemples (précis, variés, pertinents)</span><span class="critere-score">10 pts</span></div>
+      <div class="critere-row"><span class="critere-name">📝 Orthographe et grammaire</span><span class="critere-score">10 pts</span></div>
+      <div class="critere-row"><span class="critere-name">📄 Longueur et présentation</span><span class="critere-score">6 pts</span></div>
+      <div class="conseil-block">
+        <strong>3 arguments solides pour ce sujet :</strong><br>
+        → Arg. 1 : Les récits de vie permettent de <strong>comprendre l'Histoire</strong> à travers des destins humains (ex: ce texte sur la PGM, <em>La Chambre des officiers</em>, <em>Les Misérables</em>...).<br>
+        → Arg. 2 : Ils développent l'<strong>empathie et la compassion</strong> pour des personnes différentes de soi (ex: Marguerite sourde, mais écoutée et respectée).<br>
+        → Arg. 3 : Ils donnent du <strong>courage et de l'espoir</strong> en montrant que d'autres ont surmonté des épreuves (ex: autobiographies, films comme <em>La Vie est belle</em>).
+      </div>
+      <div class="model-answer">
+        <strong>🌟 Introduction réussie (niveau 14/20) :</strong>
+        « Depuis la nuit des temps, les êtres humains ont ressenti le besoin de raconter leur vie et de partager leurs expériences. Qu'il s'agisse du témoignage réel de Marguerite ou des romans qui fictionnalisent des destins, les récits de vie occupent une place centrale dans notre culture. Mais que nous apportent-ils vraiment ? Ils nous permettent, nous le verrons, de mieux comprendre l'Histoire, de développer notre empathie, et de puiser le courage d'affronter nos propres épreuves. »
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showP(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.getElementById('nav-'+id).classList.add('active');
+}
+function toggle(id){
+  const el=document.getElementById(id);
+  el.classList.toggle('show');
+  const btn=el.previousElementSibling;
+  btn.textContent=el.classList.contains('show')?'🙈 Masquer la correction':'👁 Voir la correction';
+}
+let sujetChoisi=0;
+function chooseSujet(n){
+  sujetChoisi=n;
+  document.getElementById('btn-s1').classList.toggle('selected',n===1);
+  document.getElementById('btn-s2').classList.toggle('selected',n===2);
+  document.getElementById('zone-redac').style.display='block';
+  const consignes=[
+    'Imaginez la suite du récit de Marguerite (lignes 23 à 30), du point de vue de la jeune femme, en utilisant la première personne et en terminant par l\'accident qui a causé ses blessures. Mêlez narration et description.<br><br><strong>Début imposé :</strong> <em>« Me voilà désormais sur le front. Je ne ressentais pas la peur, je n\'en avais pas le temps. »</em>',
+    'Que peuvent apporter les récits de vie, réels ou fictifs, à celles et ceux qui les découvrent ? Présentez votre réflexion dans un développement argumenté et organisé. Illustrez avec des exemples issus de vos lectures et de votre culture artistique personnelle.'
+  ];
+  document.getElementById('consigne-affichee').innerHTML='<strong>Sujet choisi :</strong> '+consignes[n-1];
+  document.getElementById('feedback-redac').classList.remove('show');
+  document.getElementById('redac-text').value='';
+}
+function countLines(){
+  const text=document.getElementById('redac-text').value;
+  const words=text.trim().split(/\s+/).filter(w=>w).length;
+  const lines=Math.round(words/8);
+  document.getElementById('line-count').textContent='~'+lines+' lignes ('+words+' mots)';
+}
+function showFeedback(){
+  const text=document.getElementById('redac-text').value.trim();
+  if(!text){alert('Écris ta rédaction avant de voir le corrigé !');return;}
+  const fb=document.getElementById('feedback-redac');
+  fb.classList.add('show');
+  document.getElementById('criteres-s1').style.display=sujetChoisi===1?'block':'none';
+  document.getElementById('criteres-s2').style.display=sujetChoisi===2?'block':'none';
+  fb.scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>
